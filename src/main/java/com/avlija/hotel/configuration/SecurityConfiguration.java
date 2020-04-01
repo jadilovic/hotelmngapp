@@ -39,10 +39,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
  @Override
  protected void configure(HttpSecurity http) throws Exception{
   http.authorizeRequests()
-   .antMatchers("/").permitAll()
-   .antMatchers("/login").permitAll()
-   .antMatchers("/signup").permitAll()
-   .antMatchers("/home/**").hasAuthority("ADMIN").anyRequest()
+   .antMatchers("/", "/login").permitAll()
+   .antMatchers("/home/**").hasAnyAuthority("ADMIN", "GUEST")
+   .antMatchers("/admin", "/signup").hasAuthority("ADMIN").anyRequest()
    .authenticated().and().csrf().disable()
    .formLogin().loginPage("/login").failureUrl("/login?error=true")
    .defaultSuccessUrl("/home/home")
@@ -51,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
    .and().logout()
    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
    .logoutSuccessUrl("/")
-   .and().rememberMe()
+   .and().rememberMe().alwaysRemember(true)
    .tokenRepository(persistentTokenRepository())
    .tokenValiditySeconds(60*60)
    .and().exceptionHandling().accessDeniedPage("/access_denied");

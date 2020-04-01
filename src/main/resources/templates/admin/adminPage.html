@@ -11,6 +11,7 @@
 <body>
  <div class="container">
   <h2>Hi <span th:utext="${userName}"></span>, this is the Admin Page.</h2>
+    <a th:href="@{/signup}">Sign Up</a>
   <a th:href="@{/logout}">Sign out</a>
  </div>
 </body>

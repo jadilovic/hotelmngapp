@@ -33,7 +33,7 @@ public class UserController {
   ModelAndView model = new ModelAndView();
   User user = new User();
   model.addObject("user", user);
-  model.setViewName("user/signup");
+  model.setViewName("admin/signup");
   
   return model;
  }
@@ -46,12 +46,12 @@ public class UserController {
    bindingResult.rejectValue("email", "error.user", "This email already exists!");
   }
   if(bindingResult.hasErrors()) {
-   model.setViewName("user/signup");
+   model.setViewName("admin/signup");
   } else {
    userService.saveUser(user);
    model.addObject("msg", "User has been registered successfully!");
    model.addObject("user", new User());
-   model.setViewName("user/signup");
+   model.setViewName("admin/signup");
   }
   
   return model;
@@ -68,14 +68,14 @@ public class UserController {
   return model;
  }
  
- @RequestMapping(value= {"/home/admin"}, method=RequestMethod.GET)
+ @RequestMapping(value= {"/admin"}, method=RequestMethod.GET)
  public ModelAndView admin() {
   ModelAndView model = new ModelAndView();
   Authentication auth = SecurityContextHolder.getContext().getAuthentication();
   User user = userService.findUserByEmail(auth.getName());
   
   model.addObject("userName", user.getFirst_name() + " " + user.getLast_name());
-  model.setViewName("home/adminPage");
+  model.setViewName("admin/adminPage");
   return model;
  }
  
