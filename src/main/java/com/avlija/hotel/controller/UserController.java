@@ -1,5 +1,13 @@
 package com.avlija.hotel.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +15,21 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.avlija.hotel.form.BookingForm;
+import com.avlija.hotel.model.Date;
+import com.avlija.hotel.model.Reservation;
+import com.avlija.hotel.model.Room;
 import com.avlija.hotel.model.User;
+import com.avlija.hotel.repository.DateRepository;
+import com.avlija.hotel.repository.ReservationRepository;
+import com.avlija.hotel.repository.RoomRepository;
+import com.avlija.hotel.repository.UserRepository;
 import com.avlija.hotel.service.UserService;
 
 @Controller
@@ -19,6 +37,15 @@ public class UserController {
 
  @Autowired
  private UserService userService;
+ 
+ @Autowired
+ private RoomRepository roomRepository;
+ 
+ @Autowired
+ private ReservationRepository reservationRepository;
+ 
+ @Autowired
+ private DateRepository dateRepository;
  
  @RequestMapping(value= {"/", "/login"}, method=RequestMethod.GET)
  public ModelAndView login() {
@@ -79,7 +106,110 @@ public class UserController {
   return model;
  }
  
- @RequestMapping(value= {"/access_denied"}, method=RequestMethod.GET)
+ @RequestMapping(value= {"/allusers"}, method=RequestMethod.GET)
+ public ModelAndView showAllUsers() {
+  ModelAndView model = new ModelAndView();
+  List<User> listUsers = userService.finaAllUsers();
+  model.addObject("listUsers", listUsers);
+  User user = new User();
+  model.addObject("user", user);
+  model.setViewName("home/list_all_users");
+  
+  return model;
+ }
+ 
+ 
+ @RequestMapping(value= {"/createroom"}, method=RequestMethod.GET)
+ public ModelAndView createRoom() {
+  ModelAndView model = new ModelAndView();
+  Room room = new Room();
+  model.addObject("room", room);
+  model.setViewName("admin/create_room");
+  
+  return model;
+ }
+ 
+ @RequestMapping(value= {"/createroom"}, method=RequestMethod.POST)
+ public ModelAndView createUser(@Valid Room room, BindingResult bindingResult) {
+  ModelAndView model = new ModelAndView();
+  Room roomExists = roomRepository.findByNum(room.getNum());
+  if(roomExists != null) {
+   bindingResult.rejectValue("num", "error.room", "This room number already exists!");
+  }
+  if(bindingResult.hasErrors()) {
+   model.setViewName("admin/create_room");
+  } else {
+   roomRepository.save(room);
+   model.addObject("msg", "Room has been registered successfully!");
+   model.addObject("room", new Room());
+   model.setViewName("admin/create_room");
+  }
+  
+  return model;
+ }
+ 
+ @RequestMapping(value= {"/allrooms"}, method=RequestMethod.GET)
+ public ModelAndView showAllRooms() {
+  ModelAndView model = new ModelAndView();
+  List<Room> listRooms = roomRepository.findAll();
+  model.addObject("listRooms", listRooms);
+  Room room = new Room();
+  model.addObject("room", room);
+  model.setViewName("home/list_all_rooms");
+  
+  return model;
+ }
+ 
+ @RequestMapping("/book/{id}")
+ public ModelAndView bookRoom(@PathVariable(name = "id") Integer id) {
+     ModelAndView mav = new ModelAndView("user/room_booking");
+     BookingForm bookingForm = new BookingForm();
+     bookingForm.setUserId(id);
+     mav.addObject("bookingForm", bookingForm);
+     return mav;
+ }
+ 
+ @RequestMapping(value = "/book", method = RequestMethod.POST)
+ public ModelAndView bookRoom(@ModelAttribute("command") BookingForm bookingForm) throws ParseException {
+     ModelAndView mav = new ModelAndView("user/room_booking");
+     int userId = bookingForm.getUserId();
+     int roomNum = bookingForm.getRoomNum();
+     int daysBetween;
+     
+     //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM dd yyyy");
+     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+     String inputFromDate = bookingForm.getFromDate();
+     String inputToDate = bookingForm.getToDate();
+     System.out.println(inputFromDate);
+     System.out.println(inputToDate);
+
+     LocalDate checkIn = LocalDate.parse(inputFromDate, formatter);
+	 LocalDate checkOut = LocalDate.parse(inputToDate, formatter);
+	 
+	 daysBetween = (int) ChronoUnit.DAYS.between(checkIn, checkOut);
+	 System.out.println ("Days: " + daysBetween);
+	 double roomCost = roomRepository.findByNum(roomNum).getRoomType().getCost();
+	 System.out.println(roomCost);
+	 double totalRoomCost = roomCost * daysBetween;
+	    
+	 	java.util.Date dateNow = new java.util.Date();  
+	 
+	 System.out.println("TEST 1, TEST 1, TEST 1");
+	 Reservation res = new Reservation(dateNow, daysBetween, totalRoomCost, userService.findUserById(userId), roomRepository.findByNum(roomNum));
+	 reservationRepository.save(res);
+	 
+	 System.out.println("TEST 2, TEST 2, TEST 2");
+	 Date date = new Date(checkIn, checkOut);
+	 dateRepository.save(date);
+	 
+	 System.out.println("TEST 3, TEST 3, TEST 3");
+	 res.getDates().add(date);
+	 reservationRepository.save(res);
+     return mav;    
+ }
+ 
+
+@RequestMapping(value= {"/access_denied"}, method=RequestMethod.GET)
  public ModelAndView accessDenied() {
   ModelAndView model = new ModelAndView();
   model.setViewName("errors/access_denied");

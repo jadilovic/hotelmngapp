@@ -10,6 +10,7 @@ import com.avlija.hotel.repository.RoleRespository;
 import com.avlija.hotel.repository.UserRepository;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -36,5 +37,17 @@ public class UserServiceImpl implements UserService {
   user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
   userRepository.save(user);
  }
+
+@Override
+public List<User> finaAllUsers() {
+	
+	return userRepository.findAll();
+}
+
+@Override
+public User findUserById(int id) {
+	// TODO Auto-generated method stub
+	return userRepository.findById((long) id).get();
+}
 
 }

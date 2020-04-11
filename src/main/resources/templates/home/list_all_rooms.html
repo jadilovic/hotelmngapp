@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:th="http://www.thymeleaf.org">
+<head>
+ <title>Sign up</title>
+ <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+ <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
+</head>
+<body>
+
+  <div class="container table-responsive" align="center">
+    <p><b th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></b></p>
+    
+    <table border="1" cellpadding="2" class="table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Room ID</th>
+                <th scope="col">Room Number</th>
+                <th scope="col">Room Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr scope="row" th:each="room : ${listRooms}">
+                <td th:text="${room.id}">Room ID</td>
+                <td th:text="${room.num}">Room Number</td>
+                <td th:text="${room.roomType.getType()}">Room Type</td>
+                <td>
+                	<a class="btn btn-success" th:href="@{'/buysell/' + ${room.id}}">Room Booking</a>
+                </td>
+                <td>
+                    <a class="btn btn-warning" th:href="@{'/edit/' + ${room.id}}">Reservations</a>
+                </td>
+                <td>
+                    <a class="btn btn-danger" th:href="@{'/delete/' + ${room.id}}">Additional Services</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>  
+</body>
+</html>

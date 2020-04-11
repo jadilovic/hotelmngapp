@@ -1,45 +1,62 @@
 package com.avlija.hotel.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="room")
-public class Room {
+public class Room  implements Serializable {
  
- @Id
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
+	private long id;
+ 
  @Column(name="room_num")
  private int num;
+ 
+ 
+// @Transient
+// private String roomType;
  
  @ManyToOne
  @JoinColumn(name ="FK_RoomTypeId")
  private RoomType roomType;
  
- @OneToMany(mappedBy="room", cascade = CascadeType.ALL)
- Set<Reservation> reservations = new HashSet<Reservation>();
  
- @Column(name="available")
- private int available;
+ @OneToOne(fetch = FetchType.LAZY, optional = false)
+ @JoinColumn(name = "id", nullable = false)
+ private Reservation reservation;
+// @OneToMany(mappedBy="room", cascade = CascadeType.ALL)
+// Set<Date> dates = new HashSet<Date>();
  
  public Room() {
 	 
  }
 
-public Room(int num, RoomType roomType, int available) {
+public Room(int num, RoomType roomType) {
 	this.num = num;
 	this.roomType = roomType;
-	this.available = available;
 }
 
 /**
@@ -71,19 +88,16 @@ public void setRoomType(RoomType roomType) {
 }
 
 /**
- * @return the available
+ * @return the id
  */
-public int getAvailable() {
-	return available;
+public long getId() {
+	return id;
 }
 
 /**
- * @param available the available to set
+ * @param id the id to set
  */
-public void setAvailable(int available) {
-	this.available = available;
+public void setId(long id) {
+	this.id = id;
 }
- 
-
-
 }

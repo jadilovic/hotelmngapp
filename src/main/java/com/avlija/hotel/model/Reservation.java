@@ -1,60 +1,91 @@
 package com.avlija.hotel.model;
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="room")
-public class Reservation {
+@Table(name="reservations")
+public class Reservation implements Serializable {
  
- @Id
+ /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+@Id
  @GeneratedValue(strategy=GenerationType.AUTO)
- @Column(name="reservation_id")
- private int reservationId;
+ @Column(name="id")
+ private long id;
  
- @ManyToOne
- @JoinColumn(name ="FK_UserId")
+ @Column(name="reservation_date")
+ private Date resDate;
+ 
+ @Column(name="reservation_days")
+ private int resDays;
+ 
+ @Column(name="total_cost")
+ private double totalCost;
+ 
+ @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+ @JoinTable(name = "reservation_date",
+         joinColumns = {
+                 @JoinColumn(name = "reservation_id", referencedColumnName = "id",
+                         nullable = false, updatable = false)},
+         inverseJoinColumns = {
+                 @JoinColumn(name = "date_id", referencedColumnName = "id",
+                         nullable = false, updatable = false)})
+ private Set<com.avlija.hotel.model.Date> dates = new HashSet<>();
+ 
+ @ManyToOne(fetch = FetchType.LAZY, optional = false)
+ @JoinColumn(name = "user_id", nullable = false)
  private User user;
  
- @ManyToOne
- @JoinColumn(name ="FK_RoomNum")
+ @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY,
+         cascade = CascadeType.ALL)
  private Room room;
- 
- @Column(name="check_in")
- private int checkIn;
- 
- @Column(name="check_out")
- private int checkOut;
  
  public Reservation() {
 	 
  }
 
-public Reservation(User user, Room room, int checkIn, int checkOut) {
+public Reservation(Date resDate, int resDays, double totalCost, User user, Room room) {
+	this.resDate = resDate;
+	this.resDays = resDays;
+	this.totalCost = totalCost;
 	this.user = user;
 	this.room = room;
-	this.checkIn = checkIn;
-	this.checkOut = checkOut;
+}
+
+
+
+/**
+ * @return the room
+ */
+public Room getRoom() {
+	return room;
 }
 
 /**
- * @return the reservationId
+ * @param room the room to set
  */
-public int getReservationId() {
-	return reservationId;
-}
-
-/**
- * @param reservationId the reservationId to set
- */
-public void setReservationId(int reservationId) {
-	this.reservationId = reservationId;
+public void setRoom(Room room) {
+	this.room = room;
 }
 
 /**
@@ -72,45 +103,73 @@ public void setUser(User user) {
 }
 
 /**
- * @return the room
+ * @return the reservationId
  */
-public Room getRoom() {
-	return room;
+public long getId() {
+	return id;
 }
 
 /**
- * @param room the room to set
+ * @param reservationId the reservationId to set
  */
-public void setRoom(Room room) {
-	this.room = room;
+public void setId(long id) {
+	this.id = id;
 }
 
 /**
- * @return the checkIn
+ * @return the resDate
  */
-public int getCheckIn() {
-	return checkIn;
+public Date getResDate() {
+	return resDate;
 }
 
 /**
- * @param checkIn the checkIn to set
+ * @param resDate the resDate to set
  */
-public void setCheckIn(int checkIn) {
-	this.checkIn = checkIn;
+public void setResDate(Date resDate) {
+	this.resDate = resDate;
 }
 
 /**
- * @return the checkOut
+ * @return the resDays
  */
-public int getCheckOut() {
-	return checkOut;
+public int getResDays() {
+	return resDays;
 }
 
 /**
- * @param checkOut the checkOut to set
+ * @param resDays the resDays to set
  */
-public void setCheckOut(int checkOut) {
-	this.checkOut = checkOut;
+public void setResDays(int resDays) {
+	this.resDays = resDays;
+}
+
+/**
+ * @return the totalCost
+ */
+public double getTotalCost() {
+	return totalCost;
+}
+
+/**
+ * @param totalCost the totalCost to set
+ */
+public void setTotalCost(double totalCost) {
+	this.totalCost = totalCost;
+}
+
+/**
+ * @return the dates
+ */
+public Set<com.avlija.hotel.model.Date> getDates() {
+	return dates;
+}
+
+/**
+ * @param dates the dates to set
+ */
+public void setDates(Set<com.avlija.hotel.model.Date> dates) {
+	this.dates = dates;
 }
 
 }
