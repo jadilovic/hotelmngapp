@@ -22,10 +22,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.avlija.hotel.form.BookingForm;
+import com.avlija.hotel.model.AddService;
 import com.avlija.hotel.model.Date;
 import com.avlija.hotel.model.Reservation;
 import com.avlija.hotel.model.Room;
 import com.avlija.hotel.model.User;
+import com.avlija.hotel.repository.AddServiceRepository;
 import com.avlija.hotel.repository.DateRepository;
 import com.avlija.hotel.repository.ReservationRepository;
 import com.avlija.hotel.repository.RoomRepository;
@@ -36,7 +38,7 @@ import com.avlija.hotel.service.UserService;
 public class ReservationController {
 
  @Autowired
- private UserService userService;
+ private AddServiceRepository addServiceRepository;
  
  @Autowired
  private RoomRepository roomRepository;
@@ -55,6 +57,16 @@ public class ReservationController {
   List<Reservation> listReservations = (List<Reservation>) reservationRepository.findAll();
   model.addObject("listReservations", listReservations);
   model.setViewName("home/list_all_reservations");
+  
+  return model;
+ }
+ 
+ @RequestMapping(value= {"/alladdservices"}, method=RequestMethod.GET)
+ public ModelAndView showAllAddServices() {
+  ModelAndView model = new ModelAndView();
+  List<AddService> listServices = (List<AddService>) addServiceRepository.findAll();
+  model.addObject("listServices", listServices);
+  model.setViewName("home/list_all_services");
   
   return model;
  }

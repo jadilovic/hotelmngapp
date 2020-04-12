@@ -1,5 +1,9 @@
 package com.avlija.hotel.form;
 
+import java.util.List;
+
+import com.avlija.hotel.model.AddService;
+
 public class BookingForm {
 
     private int userId;
@@ -7,6 +11,8 @@ public class BookingForm {
     private int roomNum;
     
     private int reservationId;
+    
+    private List<AddService> services;
     
     private long dateId;
 
@@ -230,6 +236,14 @@ public class BookingForm {
 	 */
 	public void setDropdownSelectedValue(String dropdownSelectedValue) {
 		this.dropdownSelectedValue = dropdownSelectedValue;
+	}
+
+	public List<AddService> getServices() {
+		return services;
+	}
+
+	public void setServices(List<AddService> services) {
+		this.services = services;
 	}
     
 }
