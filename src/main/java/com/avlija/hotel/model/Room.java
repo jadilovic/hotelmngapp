@@ -44,9 +44,13 @@ public class Room  implements Serializable {
  private RoomType roomType;
  
  
- @OneToOne(fetch = FetchType.LAZY, optional = false)
- @JoinColumn(name = "id", nullable = false)
+ @OneToOne(mappedBy = "room", fetch = FetchType.LAZY,
+         cascade = CascadeType.ALL)
  private Reservation reservation;
+ 
+ //@OneToOne(fetch = FetchType.LAZY, optional = false)
+ //@JoinColumn(name = "id", nullable = false)
+ //private Reservation reservation;
 // @OneToMany(mappedBy="room", cascade = CascadeType.ALL)
 // Set<Date> dates = new HashSet<Date>();
  

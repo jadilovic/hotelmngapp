@@ -56,9 +56,24 @@ public class Reservation implements Serializable {
  @JoinColumn(name = "user_id", nullable = false)
  private User user;
  
- @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY,
-         cascade = CascadeType.ALL)
+ @OneToOne(fetch = FetchType.LAZY, optional = false)
+ @JoinColumn(name = "room_id", nullable = false)
  private Room room;
+ 
+ //@OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY,
+ //        cascade = CascadeType.ALL)
+ //private Room room;
+ 
+ 
+ @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+ @JoinTable(name = "reservation_service",
+         joinColumns = {
+                 @JoinColumn(name = "reservation_id", referencedColumnName = "id",
+                         nullable = false, updatable = false)},
+         inverseJoinColumns = {
+                 @JoinColumn(name = "service_id", referencedColumnName = "service_id",
+                         nullable = false, updatable = false)})
+ private Set<AddService> services = new HashSet<>();
  
  public Reservation() {
 	 

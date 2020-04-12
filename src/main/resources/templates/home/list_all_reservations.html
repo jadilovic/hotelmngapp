@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:th="http://www.thymeleaf.org">
+<head>
+ <title>Sign up</title>
+ <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+ <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
+</head>
+<body>
+
+  <div class="container table-responsive" align="center">
+    <p><b th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></b></p>
+    
+    <table border="1" cellpadding="2" class="table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Reservation ID</th>
+                <th scope="col">Date of reservation</th>
+                <th scope="col">Number of days</th>
+                <th scope="col">Total Cost</th>
+                <th scope="col">User ID</th>
+                <th scope="col">User Name</th>
+                <th scope="col">Room Number</th>
+                <th scope="col">Room Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr scope="row" th:each="reservation : ${listReservations}">
+                <td th:text="${reservation.id}">Reservation ID</td>
+                <td th:text="${reservation.resDate}">Date of Reservation</td>
+                <td th:text="${reservation.resDays}">Number of Days</td>
+                <td th:text="${reservation.totalCost}">Total Cost</td>
+                <td th:text="${reservation.user.getId()}">User ID</td>
+                <td th:text="${reservation.user.getFirst_name()}">User Name</td>
+                <td th:text="${reservation.room.getNum()}">Room Number</td>
+                <td th:text="${reservation.room.getRoomType().getType()}">Room Type</td>
+                <td>
+                	<a class="btn btn-success" th:href="@{'/addservice/' + ${reservation.id}}">Add Service</a>
+                </td>
+                <td>
+                    <a class="btn btn-warning" th:href="@{'/edit/' + ${reservation.id}}">Edit Reservation</a>
+                </td>
+                <td>
+                    <a class="btn btn-danger" th:href="@{'/delete/' + ${reservation.id}}">Delete Reservation</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>  
+</body>
+</html>
