@@ -171,7 +171,7 @@ public class UserController {
  
  @RequestMapping(value = "/book", method = RequestMethod.POST)
  public ModelAndView bookRoom(@ModelAttribute("command") BookingForm bookingForm) throws ParseException {
-     ModelAndView mav = new ModelAndView("user/room_booking");
+     ModelAndView mav = new ModelAndView("user/booking_confirmation");
      int userId = bookingForm.getUserId();
      int roomNum = bookingForm.getRoomNum();
      int daysBetween;
@@ -205,6 +205,7 @@ public class UserController {
 	 System.out.println("TEST 3, TEST 3, TEST 3");
 	 res.getDates().add(date);
 	 reservationRepository.save(res);
+	 mav.addObject("reservation", res);
      return mav;    
  }
  

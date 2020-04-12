@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Parts List</title>
+        <meta charset="utf-8">
+        <style>.padd {padding-top: 80px;}</style>
+</head>
+<body class="padd">
+<div layout:fragment="content" class="container bg-light">
+
+  <div class="container table-responsive" align="center">
+    <p><b th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></b></p>
+    
+    <table border="1" cellpadding="2" class="table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Reservation ID</th>
+                <th scope="col">Date of reservation</th>
+                <th scope="col">Number of days</th>
+                <th scope="col">Total Cost</th>
+                <th scope="col">User ID</th>
+                <th scope="col">User Name</th>
+                <th scope="col">Room Number</th>
+                <th scope="col">Room Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr scope="row" th:object="${reservation}">
+                <td th:text="*{id}">Reservation ID</td>
+                <td th:text="*{resDate}">Date of Reservation</td>
+                <td th:text="*{resDays}">Number of Days</td>
+                <td th:text="*{totalCost}">Total Cost</td>
+                <td th:text="*{user.getId()}">User ID</td>
+                <td th:text="*{user.getFirst_name()}">User Name</td>
+                <td th:text="*{room.getNum()}">Room Number</td>
+                <td th:text="*{room.getRoomType().getType()}">Room Type</td>
+                <td>
+                	<a class="btn btn-success" th:href="@{'/editbooking/' + ${reservation.id}}">Edit Reservation</a>
+                </td>
+                <td>
+                    <a class="btn btn-warning" th:href="@{'/edit/' + ${reservation.id}}">Add Services</a>
+                </td>
+                <td>
+                    <a class="btn btn-danger" th:href="@{'/delete/' + ${reservation.id}}">Poništi</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>   
+</div>
+
+</body>
+</html>
+ 
