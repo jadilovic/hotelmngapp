@@ -71,4 +71,55 @@ public class ReservationController {
   return model;
  }
  
+ @RequestMapping("/addservice/{id}")
+ public ModelAndView bookRoom(@PathVariable(name = "id") Long id) {
+     ModelAndView mav = new ModelAndView("user/adding_service");
+     BookingForm bookingForm = new BookingForm();
+     bookingForm.setReservationId(id);
+     List<AddService> serviceList = (List<AddService>) addServiceRepository.findAll();
+     bookingForm.setServices(serviceList);
+     mav.addObject("bookingForm", bookingForm);
+     return mav;
+ }
+ 
+ @RequestMapping(value = "/addservice", method = RequestMethod.POST)
+ public ModelAndView bookRoom(@ModelAttribute("command") BookingForm bookingForm) throws ParseException {
+     ModelAndView mav = new ModelAndView("user/booking_confirmation");
+     int userId = bookingForm.getUserId();
+     int roomNum = bookingForm.getRoomNum();
+     int daysBetween;
+     
+     //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM dd yyyy");
+     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+     String inputFromDate = bookingForm.getFromDate();
+     String inputToDate = bookingForm.getToDate();
+     System.out.println(inputFromDate);
+     System.out.println(inputToDate);
+
+     LocalDate checkIn = LocalDate.parse(inputFromDate, formatter);
+	 LocalDate checkOut = LocalDate.parse(inputToDate, formatter);
+	 
+	 daysBetween = (int) ChronoUnit.DAYS.between(checkIn, checkOut);
+	 System.out.println ("Days: " + daysBetween);
+	 double roomCost = roomRepository.findByNum(roomNum).getRoomType().getCost();
+	 System.out.println(roomCost);
+	 double totalRoomCost = roomCost * daysBetween;
+	    
+	 	java.util.Date dateNow = new java.util.Date();  
+	 
+	 System.out.println("TEST 1, TEST 1, TEST 1");
+	// Reservation res = new Reservation(dateNow, daysBetween, totalRoomCost, userService.findUserById(userId), roomRepository.findByNum(roomNum));
+	// reservationRepository.save(res);
+	 
+	 System.out.println("TEST 2, TEST 2, TEST 2");
+	 Date date = new Date(checkIn, checkOut);
+	 dateRepository.save(date);
+	 
+	 System.out.println("TEST 3, TEST 3, TEST 3");
+	// res.getDates().add(date);
+	// reservationRepository.save(res);
+	// mav.addObject("reservation", res);
+     return mav;    
+ }
+ 
 }

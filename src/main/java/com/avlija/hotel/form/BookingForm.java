@@ -10,7 +10,7 @@ public class BookingForm {
     
     private int roomNum;
     
-    private int reservationId;
+    private long reservationId;
     
     private List<AddService> services;
     
@@ -87,14 +87,14 @@ public class BookingForm {
 	/**
 	 * @return the reservationId
 	 */
-	public int getReservationId() {
+	public long getReservationId() {
 		return reservationId;
 	}
 
 	/**
 	 * @param reservationId the reservationId to set
 	 */
-	public void setReservationId(int reservationId) {
+	public void setReservationId(long reservationId) {
 		this.reservationId = reservationId;
 	}
 
