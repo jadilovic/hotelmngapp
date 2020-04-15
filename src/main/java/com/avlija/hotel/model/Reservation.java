@@ -56,9 +56,9 @@ public class Reservation implements Serializable {
  @JoinColumn(name = "user_id", nullable = false)
  private User user;
  
- @OneToOne(fetch = FetchType.LAZY, optional = false)
- @JoinColumn(name = "room_id", nullable = false)
- private Room room;
+ //@OneToOne(fetch = FetchType.LAZY, optional = false)
+//@JoinColumn(name = "room_id", nullable = false)
+ //private Room room;
  
  //@OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY,
  //        cascade = CascadeType.ALL)
@@ -79,28 +79,11 @@ public class Reservation implements Serializable {
 	 
  }
 
-public Reservation(Date resDate, int resDays, double totalCost, User user, Room room) {
+public Reservation(Date resDate, int resDays, double totalCost, User user) {
 	this.resDate = resDate;
 	this.resDays = resDays;
 	this.totalCost = totalCost;
 	this.user = user;
-	this.room = room;
-}
-
-
-
-/**
- * @return the room
- */
-public Room getRoom() {
-	return room;
-}
-
-/**
- * @param room the room to set
- */
-public void setRoom(Room room) {
-	this.room = room;
 }
 
 /**
@@ -186,5 +169,20 @@ public Set<com.avlija.hotel.model.Date> getDates() {
 public void setDates(Set<com.avlija.hotel.model.Date> dates) {
 	this.dates = dates;
 }
+
+/**
+ * @return the services
+ */
+public Set<AddService> getServices() {
+	return services;
+}
+
+/**
+ * @param services the services to set
+ */
+public void setServices(Set<AddService> services) {
+	this.services = services;
+}
+
 
 }

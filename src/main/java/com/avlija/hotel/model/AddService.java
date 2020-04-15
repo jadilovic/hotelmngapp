@@ -97,5 +97,9 @@ public void setReservations(Set<Reservation> reservations) {
 	this.reservations = reservations;
 }
  
+@Override
+public String toString() {
+	return name + ", Cost: " + cost + "KM";
+}
 
 }

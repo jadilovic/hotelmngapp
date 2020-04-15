@@ -18,6 +18,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+
 @Entity
 @Table(name="room")
 public class Room  implements Serializable {
@@ -44,17 +45,29 @@ public class Room  implements Serializable {
  private RoomType roomType;
  
  
- @OneToOne(mappedBy = "room", fetch = FetchType.LAZY,
+ //@OneToOne(mappedBy = "room", fetch = FetchType.LAZY,
+//         cascade = CascadeType.ALL)
+// private Reservation reservation;
+ 
+ @OneToMany(mappedBy = "room", fetch = FetchType.LAZY,
          cascade = CascadeType.ALL)
- private Reservation reservation;
- 
- //@OneToOne(fetch = FetchType.LAZY, optional = false)
- //@JoinColumn(name = "id", nullable = false)
- //private Reservation reservation;
-// @OneToMany(mappedBy="room", cascade = CascadeType.ALL)
-// Set<Date> dates = new HashSet<Date>();
- 
- public Room() {
+ private Set<Date> dates;
+
+/**
+ * @return the dates
+ */
+public Set<Date> getDates() {
+	return dates;
+}
+
+/**
+ * @param dates the dates to set
+ */
+public void setDates(Set<Date> dates) {
+	this.dates = dates;
+}
+
+public Room() {
 	 
  }
 
@@ -103,5 +116,10 @@ public long getId() {
  */
 public void setId(long id) {
 	this.id = id;
+}
+
+@Override
+public String toString() {
+	return "Room number: " + num + ", Type: " + roomType.getType();
 }
 }

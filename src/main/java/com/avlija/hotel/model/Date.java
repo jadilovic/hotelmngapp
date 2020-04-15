@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "dates")
 public class Date implements Serializable {
@@ -49,13 +50,34 @@ public class Date implements Serializable {
     @ManyToMany(mappedBy = "dates", fetch = FetchType.LAZY)
     private Set<Reservation> reservations = new HashSet<>();
     
-    public Date() {
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "room_id")
+    private Room room;
+
+
+	public Date() {
     	
     }
 
-	public Date(LocalDate checkIn, LocalDate checkOut) {
+	public Date(LocalDate checkIn, LocalDate checkOut, Room room) {
 		this.start = checkIn;
 		this.end = checkOut;
+		this.room = room;
+	}
+	
+    
+    /**
+	 * @return the room
+	 */
+	public Room getRoom() {
+		return room;
+	}
+
+	/**
+	 * @param room the room to set
+	 */
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 
 	/**

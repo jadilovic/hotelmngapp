@@ -3,6 +3,7 @@ package com.avlija.hotel.form;
 import java.util.List;
 
 import com.avlija.hotel.model.AddService;
+import com.avlija.hotel.model.Room;
 
 public class BookingForm {
 
@@ -12,9 +13,43 @@ public class BookingForm {
     
     private long reservationId;
     
+    private int serviceId;
+    
     private List<AddService> services;
     
-    private long dateId;
+    private int roomId;
+    
+    private List<Room> rooms;
+    
+    /**
+	 * @return the roomId
+	 */
+	public int getRoomId() {
+		return roomId;
+	}
+
+	/**
+	 * @param roomId the roomId to set
+	 */
+	public void setRoomId(int roomId) {
+		this.roomId = roomId;
+	}
+
+	/**
+	 * @return the rooms
+	 */
+	public List<Room> getRooms() {
+		return rooms;
+	}
+
+	/**
+	 * @param rooms the rooms to set
+	 */
+	public void setRooms(List<Room> rooms) {
+		this.rooms = rooms;
+	}
+
+	private long dateId;
 
     private String fromDate;
     
@@ -244,6 +279,14 @@ public class BookingForm {
 
 	public void setServices(List<AddService> services) {
 		this.services = services;
+	}
+
+	public int getServiceId() {
+		return serviceId;
+	}
+
+	public void setServiceId(int serviceId) {
+		this.serviceId = serviceId;
 	}
     
 }

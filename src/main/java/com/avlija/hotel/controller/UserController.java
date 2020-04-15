@@ -195,11 +195,12 @@ public class UserController {
 	 	java.util.Date dateNow = new java.util.Date();  
 	 
 	 System.out.println("TEST 1, TEST 1, TEST 1");
-	 Reservation res = new Reservation(dateNow, daysBetween, totalRoomCost, userService.findUserById(userId), roomRepository.findByNum(roomNum));
+	 Reservation res = new Reservation(dateNow, daysBetween, totalRoomCost, userService.findUserById(userId));
 	 reservationRepository.save(res);
 	 
 	 System.out.println("TEST 2, TEST 2, TEST 2");
-	 Date date = new Date(checkIn, checkOut);
+	 Room bookedRoom = roomRepository.findByNum(roomNum);
+	 Date date = new Date(checkIn, checkOut, bookedRoom);
 	 dateRepository.save(date);
 	 
 	 System.out.println("TEST 3, TEST 3, TEST 3");

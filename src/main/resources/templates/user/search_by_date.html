@@ -37,27 +37,44 @@ $('.col-sm-4.date').datepicker({
 
 <body>
 <div class="container">
-<h1>Adding Additional Service to the Reservation</h1>
+<h1>Room Booking / Reservation</h1>
     
-    <form class="form-horizontal" role="form" th:action="@{/addservice}" th:object="${bookingForm}" method="post">
+    <form class="form-horizontal" role="form" th:action="@{/search}" th:object="${bookingForm}" method="post">
       
       <div class="form-group">
-        <label for="num" class="col-sm-2 control-label">Reservation ID:</label>
+        <label for="num" class="col-sm-2 control-label">User ID:</label>
         <div class="col-sm-5 input-group">
-          <input type="text" th:field="*{reservationId}" readonly="readonly" />
+          <input type="text" th:field="*{userId}" readonly="readonly" />
         </div>
       </div>
+
+      <div class="form-group">
+        <label for="fromDate" class="col-sm-2 control-label">Check In:</label>
+        <div class="col-sm-4 input-group date">
+          <input type="text" class="form-control inputstl" th:field="*{fromDate}" placeholder="Check In"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+        </div>
+      </div>            
+
+      <div class="form-group">
+        <label for="toDate" class="col-sm-2 control-label">Check Out:</label>
+        <div class="col-sm-4 input-group date">
+          <input type="text" class="form-control inputstl" th:field="*{toDate}" placeholder="Check Out"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+        </div>
+      </div>  
       
-    <ul>
-        <li th:each="service : ${serviceList}">
-            <input type="checkbox" th:field="*{services}" th:value="${service.getId()}" />
-            <label th:for="${#ids.prev('services')}" th:text="${service.toString()}">RED</label>
-        </li>
-    </ul>
+      <div th:if="${availableRooms != null}">
+         <ul>
+        	<li th:each="room : ${availableRooms}">
+            	<input type="radio" th:field="*{rooms}" th:value="${room.getId()}" />
+            	<label th:for="${#ids.prev('rooms')}" th:text="${room.toString()}">RED</label>
+        	</li>
+    	</ul>
+      </div>
+
       
       <div class="form-group ">
         <div class="col-sm-offset-2 col-sm-4">
-          <button type="submit" class="btn btn-lg btn-block btn-success">Submit Additional Services</button>
+          <button type="submit" class="btn btn-lg btn-block btn-success">Search by Date</button>
         </div>
       </div>
     </form>
