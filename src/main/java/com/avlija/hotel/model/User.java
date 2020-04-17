@@ -59,9 +59,13 @@ public class User {
  			inverseJoinColumns=@JoinColumn(name="role_id"))
  private Set<Role> roles;
  
+ //@OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
+ //        cascade = CascadeType.ALL)
+// private Set<Reservation> reservations;
+ 
  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
          cascade = CascadeType.ALL)
- private Set<Reservation> reservations;
+ private Set<NoteReservation> noteReservations;
  
 // @OneToOne(mappedBy = "user", fetch = FetchType.LAZY,
  //        cascade = CascadeType.ALL)
@@ -78,18 +82,18 @@ public String getGender() {
 
 /**
  * @return the reservations
- */
+ 
 public Set<Reservation> getReservations() {
 	return reservations;
 }
 
-/**
+
  * @param reservations the reservations to set
- */
+
 public void setReservations(Set<Reservation> reservations) {
 	this.reservations = reservations;
 }
-
+ */
 /**
  * @param gender the gender to set
  */
@@ -206,4 +210,20 @@ public String getRole() {
 public void setRole(String role) {
 	this.role = role;
 }
+
+/**
+ * @return the noteReservations
+ */
+public Set<NoteReservation> getNoteReservations() {
+	return noteReservations;
+}
+
+/**
+ * @param noteReservations the noteReservations to set
+ */
+public void setNoteReservations(Set<NoteReservation> noteReservations) {
+	this.noteReservations = noteReservations;
+}
+
+
 }

@@ -6,4 +6,5 @@ import com.avlija.hotel.model.Date;
 
 public interface DateRepository extends CrudRepository<Date, Long>{
 
+
 }

@@ -27,16 +27,19 @@ import com.avlija.hotel.form.BookingForm;
 import com.avlija.hotel.model.AddService;
 import com.avlija.hotel.model.Date;
 import com.avlija.hotel.model.LocalDateAttributeConverter;
+import com.avlija.hotel.model.NoteReservation;
 import com.avlija.hotel.model.Reservation;
 import com.avlija.hotel.model.Room;
 import com.avlija.hotel.model.User;
 import com.avlija.hotel.repository.AddServiceRepository;
 import com.avlija.hotel.repository.DateRepository;
+import com.avlija.hotel.repository.NoteReservationRepository;
 import com.avlija.hotel.repository.ReservationRepository;
 import com.avlija.hotel.repository.RoomRepository;
 import com.avlija.hotel.repository.UserRepository;
 import com.avlija.hotel.service.ReservationServiceImpl;
 import com.avlija.hotel.service.UserService;
+import com.avlija.hotel.service.UserServiceImpl;
 
 import net.bytebuddy.asm.Advice.Local;
 
@@ -53,14 +56,22 @@ public class ReservationController {
  private ReservationServiceImpl reservationImpl;
  
  @Autowired
+ private NoteReservationRepository noteReservationRepository;
+ 
+ @Autowired
  private DateRepository dateRepository;
  
-
+ 	@Autowired
+ 	private UserServiceImpl userServiceImpl;
  
  @RequestMapping(value= {"/allreservations"}, method=RequestMethod.GET)
  public ModelAndView showAllReservations() {
   ModelAndView model = new ModelAndView();
-  List<Reservation> listReservations = reservationImpl.findAllReservations();
+  List<NoteReservation> listReservations = (List<NoteReservation>) noteReservationRepository.findAll();
+  
+  for(NoteReservation res: listReservations) {
+	  System.out.println(res.toString());
+  }
   model.addObject("listReservations", listReservations);
   model.setViewName("home/list_all_reservations");
   
@@ -135,17 +146,34 @@ public class ReservationController {
      LocalDate In = LocalDate.parse(inputFromDate, formatter);
 	 LocalDate Out = LocalDate.parse(inputToDate, formatter);
 	 
-	 LocalDate checkIn = In.minusDays(1);
-	 LocalDate checkOut = Out.minusDays(1);
+	 //LocalDate checkIn = In.minusDays(1);
+	 //LocalDate checkOut = Out.minusDays(1);
 	 
 	 System.out.println("TEST 1, TEST 1, TEST 1");
-	 System.out.println("Check in: " + checkIn.toString() + ", Check out: " + checkOut.toString());
-	 
-	 List<Date> allDates = (List<Date>) dateRepository.findAll();
-	 List<Long> bookedRoomsIds = new ArrayList<>();
+	 System.out.println("Check in: " + In.toString() + ", Check out: " + Out.toString());
 	 
 	 LocalDateAttributeConverter converter = new LocalDateAttributeConverter();
+	 java.sql.Date start = converter.convertToDatabaseColumn(In);
+	 java.sql.Date end = converter.convertToDatabaseColumn(Out);
 	 
+	 List<NoteReservation> reservations = noteReservationRepository.findByDateFromTo(start, end);
+	 List<NoteReservation> reservationsBefore = noteReservationRepository.findByDateBefore(start);
+	 
+	 System.out.println("TEST 2, TEST 2, TEST 2");
+	 System.out.println("Check in: " + start + ", Check out: " + end);
+	 
+		for(NoteReservation reservation: reservationsBefore) {
+			 System.out.println("RESERVATION DATES: Start:" + reservation.toString() + ", End: " + reservation.toString());
+		 }
+	 
+	for(NoteReservation reservation: reservations) {
+		 System.out.println("RESERVATION FROM TO DATES: Start:" + reservation.toString() + ", End: " + reservation.toString());
+	 }
+	 
+	// List<Date> allDates = (List<Date>) dateRepository.findAll();
+	// List<Long> bookedRoomsIds = new ArrayList<>();
+
+	 /*
 	 for(Date date: allDates) {
 		 LocalDate startDate = converter.convertToEntityAttribute(date.getStart());
 		 LocalDate endDate = converter.convertToEntityAttribute(date.getEnd());
@@ -160,7 +188,7 @@ public class ReservationController {
 			 bookedRoomsIds.add(allDates.get(i).getRoom().getId());
 		 }
 	 }
-
+		*/
 	 System.out.println("TEST 3, TEST 3, TEST 3");
 	 List<Long> availableRoomsIds = new ArrayList<Long>();
 	 
@@ -174,10 +202,10 @@ public class ReservationController {
 	 System.out.println("TEST 4, TEST 4, TEST 4");
 
 	 System.out.println("ALL ROOMS IDS: " + availableRoomsIds.toString());
-	 System.out.println("BOOKED ROOMS IDS: " + bookedRoomsIds.toString());
+	// System.out.println("BOOKED ROOMS IDS: " + bookedRoomsIds.toString());
 	 
 	 //Removing booked IDs from all room IDs
-	 availableRoomsIds.removeAll(bookedRoomsIds);
+	// availableRoomsIds.removeAll(bookedRoomsIds);
 	 
 	 System.out.println("AVAILABLE ROOMS IDS: " + availableRoomsIds.toString());
 	 
@@ -188,6 +216,71 @@ public class ReservationController {
 
 	 mav.addObject("availableRooms", availableRooms);
 	 mav.addObject("bookingForm", bookingForm);
+     return mav;    
+ }
+ 
+ @RequestMapping("/reserve/{id}")
+ public ModelAndView reserveRoom(@PathVariable(name = "id") Integer id) {
+     ModelAndView mav = new ModelAndView("user/reserve_room");
+     BookingForm bookingForm = new BookingForm();
+     bookingForm.setUserId(id);
+     mav.addObject("bookingForm", bookingForm);
+     return mav;
+ }
+ 
+ @RequestMapping(value = "/reserve", method = RequestMethod.POST)
+ public ModelAndView reserveRoom(@ModelAttribute("command") BookingForm bookingForm) throws ParseException {
+     ModelAndView mav = new ModelAndView("user/reserve_confirmation");
+     int userId = bookingForm.getUserId();
+     User user = userServiceImpl.findUserById(userId);
+     int roomNum = bookingForm.getRoomNum();
+     Room room = roomRepository.findByNum(roomNum);
+     //int daysBetween;
+     
+     //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM dd yyyy");
+     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+     String inputFromDate = bookingForm.getFromDate();
+     String inputToDate = bookingForm.getToDate();
+
+     LocalDate checkIn = LocalDate.parse(inputFromDate, formatter);
+	 LocalDate checkOut = LocalDate.parse(inputToDate, formatter);
+	 checkIn = checkIn.plusDays(1);
+	 checkOut = checkOut.plusDays(1);
+	 
+	 LocalDateAttributeConverter converter = new LocalDateAttributeConverter();
+	 java.sql.Date start = converter.convertToDatabaseColumn(checkIn);
+	 java.sql.Date end = converter.convertToDatabaseColumn(checkOut);
+	 
+     System.out.println(start.toString());
+     System.out.println(end.toString());
+	 
+	// daysBetween = (int) ChronoUnit.DAYS.between(checkIn, checkOut);
+	// System.out.println ("Days: " + daysBetween);
+	// double roomCost = roomRepository.findByNum(roomNum).getRoomType().getCost();
+	// System.out.println(roomCost);
+	// double totalRoomCost = roomCost * daysBetween;
+	    
+	 	java.util.Date dateNow = new java.util.Date();  
+	 
+	 System.out.println("TEST 1, TEST 1, TEST 1");
+	 NoteReservation res = new NoteReservation(true, dateNow, start, end, room, user);
+	 noteReservationRepository.save(res);
+	 Long id = res.getId();
+	 /*
+	 System.out.println("TEST 2, TEST 2, TEST 2");
+	 Room bookedRoom = roomRepository.findByNum(roomNum);
+	 LocalDateAttributeConverter converter = new LocalDateAttributeConverter();
+	 java.sql.Date startDate = converter.convertToDatabaseColumn(checkIn);
+	 java.sql.Date endDate = converter.convertToDatabaseColumn(checkOut);
+	 
+	 Date date = new Date(startDate, endDate, bookedRoom);
+	 dateRepository.save(date);
+	 
+	 System.out.println("TEST 3, TEST 3, TEST 3");
+	 res.getDates().add(date);
+	 reservationRepository.save(res); */
+	 NoteReservation reservation = noteReservationRepository.findById(id).get();
+	 mav.addObject("reservation", reservation);
      return mav;    
  }
  

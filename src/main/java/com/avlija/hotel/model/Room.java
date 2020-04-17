@@ -52,6 +52,10 @@ public class Room  implements Serializable {
  @OneToMany(mappedBy = "room", fetch = FetchType.LAZY,
          cascade = CascadeType.ALL)
  private Set<Date> dates;
+ 
+ @OneToMany(mappedBy = "room", fetch = FetchType.LAZY,
+         cascade = CascadeType.ALL)
+ private Set<NoteReservation> noteReservation;
 
 /**
  * @return the dates
@@ -116,6 +120,20 @@ public long getId() {
  */
 public void setId(long id) {
 	this.id = id;
+}
+
+/**
+ * @return the noteReservation
+ */
+public Set<NoteReservation> getNoteReservation() {
+	return noteReservation;
+}
+
+/**
+ * @param noteReservation the noteReservation to set
+ */
+public void setNoteReservation(Set<NoteReservation> noteReservation) {
+	this.noteReservation = noteReservation;
 }
 
 @Override

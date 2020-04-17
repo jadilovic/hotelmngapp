@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script type='text/javascript' src='//code.jquery.com/jquery-1.8.3.js'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
+    <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+.inputstl { 
+    padding: 9px; 
+    border: solid 1px #B3FFB3; 
+    outline: 0; 
+    background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #A4FFA4), to(#FFFFFF)); 
+    background: -moz-linear-gradient(top, #FFFFFF, #A4FFA4 1px, #FFFFFF 25px); 
+    box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
+    -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
+    -webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
+
+    } 
+   
+</style>
+
+<script type='text/javascript'>
+$(function(){
+$('.col-sm-4.date').datepicker({
+});
+});
+
+</script>
+
+</head>
+
+<body>
+<div class="container">
+<h1>Room Reservation</h1>
+    
+    <form class="form-horizontal" role="form" th:action="@{/reserve}" th:object="${bookingForm}" method="post">
+      
+      <div class="form-group">
+        <label for="num" class="col-sm-2 control-label">User ID:</label>
+        <div class="col-sm-5 input-group">
+          <input type="text" th:field="*{userId}" readonly="readonly" />
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="roomNum" class="col-sm-2 control-label">Room Number:</label>
+        <div class="col-sm-5 input-group">
+          <input type="text" th:field="*{roomNum}" placeholder="Room Number"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="fromDate" class="col-sm-2 control-label">Check In:</label>
+        <div class="col-sm-4 input-group date">
+          <input type="text" class="form-control inputstl" th:field="*{fromDate}" placeholder="Check In"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+         <!-- <input type="text" class="input-sm form-control" th:field="*{fromDate}" name="from" placeholder="Od datuma"/> --> 
+        </div>
+      </div>            
+
+      <div class="form-group">
+        <label for="toDate" class="col-sm-2 control-label">Check Out:</label>
+        <div class="col-sm-4 input-group date">
+          <input type="text" class="form-control inputstl" th:field="*{toDate}" placeholder="Check Out"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+         <!-- <input type="text" class="input-sm form-control" th:field="*{fromDate}" name="from" placeholder="Od datuma"/> --> 
+        </div>
+      </div>  
+      
+      <div class="form-group ">
+        <div class="col-sm-offset-2 col-sm-4">
+          <button type="submit" class="btn btn-lg btn-block btn-success">Reserve a Room</button>
+        </div>
+      </div>
+    </form>
+    
+   </div> 
+</body>
+</html>
