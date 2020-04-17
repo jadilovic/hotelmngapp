@@ -38,10 +38,10 @@ public class Date implements Serializable {
 	//private Room room;
 	
 	@Column(name = "check_in")
-	private LocalDate start;
+	private java.sql.Date start;
 	
 	@Column(name = "check_out")
-	private LocalDate end;
+	private java.sql.Date end;
 	
     //@OneToOne(fetch = FetchType.LAZY, optional = false)
    // @JoinColumn(name = "user_id", nullable = false)
@@ -59,9 +59,9 @@ public class Date implements Serializable {
     	
     }
 
-	public Date(LocalDate checkIn, LocalDate checkOut, Room room) {
-		this.start = checkIn;
-		this.end = checkOut;
+	public Date(java.sql.Date startDate, java.sql.Date endDate, Room room) {
+		this.start = startDate;
+		this.end = endDate;
 		this.room = room;
 	}
 	
@@ -96,28 +96,28 @@ public class Date implements Serializable {
 	/**
 	 * @return the start
 	 */
-	public LocalDate getStart() {
+	public java.sql.Date getStart() {
 		return start;
 	}
 
 	/**
 	 * @param start the start to set
 	 */
-	public void setStart(LocalDate start) {
+	public void setStart(java.sql.Date start) {
 		this.start = start;
 	}
 
 	/**
 	 * @return the end
 	 */
-	public LocalDate getEnd() {
+	public java.sql.Date getEnd() {
 		return end;
 	}
 
 	/**
 	 * @param end the end to set
 	 */
-	public void setEnd(LocalDate end) {
+	public void setEnd(java.sql.Date end) {
 		this.end = end;
 	}
 

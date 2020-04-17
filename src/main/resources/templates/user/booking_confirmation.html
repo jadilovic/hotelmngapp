@@ -33,8 +33,9 @@
                 <td th:text="*{totalCost}">Total Cost</td>
                 <td th:text="*{user.getId()}">User ID</td>
                 <td th:text="*{user.getFirst_name()}">User Name</td>
+                <!--
                 <td th:text="*{room.getNum()}">Room Number</td>
-                <td th:text="*{room.getRoomType().getType()}">Room Type</td>
+                <td th:text="*{room.getRoomType().getType()}">Room Type</td>  -->
                 <td>
                 	<a class="btn btn-success" th:href="@{'/editbooking/' + ${reservation.id}}">Edit Reservation</a>
                 </td>

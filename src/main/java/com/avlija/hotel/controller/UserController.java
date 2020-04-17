@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.avlija.hotel.form.BookingForm;
 import com.avlija.hotel.model.Date;
+import com.avlija.hotel.model.LocalDateAttributeConverter;
 import com.avlija.hotel.model.Reservation;
 import com.avlija.hotel.model.Room;
 import com.avlija.hotel.model.User;
@@ -200,7 +201,11 @@ public class UserController {
 	 
 	 System.out.println("TEST 2, TEST 2, TEST 2");
 	 Room bookedRoom = roomRepository.findByNum(roomNum);
-	 Date date = new Date(checkIn, checkOut, bookedRoom);
+	 LocalDateAttributeConverter converter = new LocalDateAttributeConverter();
+	 java.sql.Date startDate = converter.convertToDatabaseColumn(checkIn);
+	 java.sql.Date endDate = converter.convertToDatabaseColumn(checkOut);
+	 
+	 Date date = new Date(startDate, endDate, bookedRoom);
 	 dateRepository.save(date);
 	 
 	 System.out.println("TEST 3, TEST 3, TEST 3");

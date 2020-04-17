@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.avlija.hotel.form.BookingForm;
 import com.avlija.hotel.model.AddService;
 import com.avlija.hotel.model.Date;
+import com.avlija.hotel.model.LocalDateAttributeConverter;
 import com.avlija.hotel.model.Reservation;
 import com.avlija.hotel.model.Room;
 import com.avlija.hotel.model.User;
@@ -36,6 +37,8 @@ import com.avlija.hotel.repository.RoomRepository;
 import com.avlija.hotel.repository.UserRepository;
 import com.avlija.hotel.service.ReservationServiceImpl;
 import com.avlija.hotel.service.UserService;
+
+import net.bytebuddy.asm.Advice.Local;
 
 @Controller
 public class ReservationController {
@@ -129,29 +132,54 @@ public class ReservationController {
      String inputToDate = bookingForm.getToDate();
 
      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-     LocalDate checkIn = LocalDate.parse(inputFromDate, formatter);
-	 LocalDate checkOut = LocalDate.parse(inputToDate, formatter);
+     LocalDate In = LocalDate.parse(inputFromDate, formatter);
+	 LocalDate Out = LocalDate.parse(inputToDate, formatter);
+	 
+	 LocalDate checkIn = In.minusDays(1);
+	 LocalDate checkOut = Out.minusDays(1);
 	 
 	 System.out.println("TEST 1, TEST 1, TEST 1");
-
+	 System.out.println("Check in: " + checkIn.toString() + ", Check out: " + checkOut.toString());
+	 
 	 List<Date> allDates = (List<Date>) dateRepository.findAll();
 	 List<Long> bookedRoomsIds = new ArrayList<>();
 	 
+	 LocalDateAttributeConverter converter = new LocalDateAttributeConverter();
+	 
+	 for(Date date: allDates) {
+		 LocalDate startDate = converter.convertToEntityAttribute(date.getStart());
+		 LocalDate endDate = converter.convertToEntityAttribute(date.getEnd());
+		 System.out.println("ALL DATES: Start:" + startDate.toString() + ", End: " + endDate.toString());
+	 }
+	 
+	 // Get room IDs on search dates
 	 for(int i = 0; i < allDates.size(); i++) {
-		 if(allDates.get(i).getStart().equals(checkIn) && allDates.get(i).getEnd().equals(checkOut)){
+		 LocalDate startDate = converter.convertToEntityAttribute(allDates.get(i).getStart());
+		 LocalDate endDate = converter.convertToEntityAttribute(allDates.get(i).getEnd());
+		 if(startDate.equals(checkIn) && endDate.equals(checkOut)){
 			 bookedRoomsIds.add(allDates.get(i).getRoom().getId());
 		 }
 	 }
 
 	 System.out.println("TEST 3, TEST 3, TEST 3");
 	 List<Long> availableRoomsIds = new ArrayList<Long>();
+	 
 	 List<Room> allRooms = roomRepository.findAll();
+	 System.out.println("ALL ROOMS: " + allRooms.toString());
+	 
+	 // Gettin all room IDs
 	 for(Room room: allRooms) {
 		 availableRoomsIds.add(room.getId());
 	 }
 	 System.out.println("TEST 4, TEST 4, TEST 4");
 
+	 System.out.println("ALL ROOMS IDS: " + availableRoomsIds.toString());
+	 System.out.println("BOOKED ROOMS IDS: " + bookedRoomsIds.toString());
+	 
+	 //Removing booked IDs from all room IDs
 	 availableRoomsIds.removeAll(bookedRoomsIds);
+	 
+	 System.out.println("AVAILABLE ROOMS IDS: " + availableRoomsIds.toString());
 	 
 	 List<Room> availableRooms = new ArrayList<>();
 	 for(long availableRoomId: availableRoomsIds) {
