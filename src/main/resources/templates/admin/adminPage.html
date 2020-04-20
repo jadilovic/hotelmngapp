@@ -11,8 +11,16 @@
 <body>
  <div class="container">
   <h2>Hi <span th:utext="${userName}"></span>, this is the Admin Page.</h2>
-    <a th:href="@{/signup}">Sign Up</a>
-  <a th:href="@{/logout}">Sign out</a>
+   <a th:href="@{/signup}" class="btn-primary btn-lg btn-block" role="button" aria-pressed="true">Sign Up</a>
+   <p></p>
+     <a th:href="@{/allreservations}" class="btn-warning btn-lg btn-block" role="button" aria-pressed="true">List All Reservations</a>
+             <p></p>
+  <a th:href="@{/allusers}" class="btn-success btn-lg btn-block" role="button" aria-pressed="true">List All Users</a>
+       <p></p>
+  <a th:href="@{/createroom}" class="btn-info btn-lg btn-block" role="button" aria-pressed="true">Create Room</a>
+         <p></p>
+  <a th:href="@{/logout}" class="btn-secondary btn-lg btn-block" role="button" aria-pressed="true">Sign out</a>
+     <p></p>
  </div>
 </body>
 </html>
