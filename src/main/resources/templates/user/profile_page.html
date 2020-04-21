@@ -53,10 +53,10 @@
       <th scope="row">Active:</th>
       <td><span th:text="*{active}"></span></td>
     </tr>
-        <tr th:each="Role : ${roles}">
-            <th scope="row">Role:</th>
-            <td><span th:text="${Role.getRole()}"></span></td>
-        </tr>
+    <tr th:each="role : ${roles}">
+        <th scope="row">Role:</th>
+        <td><span th:text="${role.getRole()}"></span></td>
+    </tr>
   </tbody>
 </table>
  </div>

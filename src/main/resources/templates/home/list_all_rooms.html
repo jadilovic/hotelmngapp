@@ -27,7 +27,7 @@
                 <td th:text="${room.num}">Room Number</td>
                 <td th:text="${room.roomType.getType()}">Room Type</td>
                 <td>
-                	<a class="btn btn-success" th:href="@{'/buysell/' + ${room.id}}">Room Booking</a>
+                	<a class="btn btn-success" th:href="@{/search}">Search by Date</a>
                 </td>
                 <td>
                     <a class="btn btn-warning" th:href="@{'/edit/' + ${room.id}}">Reservations</a>

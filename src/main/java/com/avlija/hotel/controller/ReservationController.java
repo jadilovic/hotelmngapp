@@ -125,11 +125,10 @@ public class ReservationController {
      return mav;    
  }
  
- @RequestMapping("/search/{id}")
- public ModelAndView searchByDate(@PathVariable(name = "id") Integer id) {
+ @RequestMapping("/search")
+ public ModelAndView searchByDate() {
      ModelAndView mav = new ModelAndView("user/search_by_date");
      BookingForm bookingForm = new BookingForm();
-     bookingForm.setUserId(id);
      mav.addObject("bookingForm", bookingForm);
      return mav;
  }
@@ -137,7 +136,6 @@ public class ReservationController {
  @RequestMapping(value = "/search", method = RequestMethod.POST)
  public ModelAndView searchByDate(@ModelAttribute("command") BookingForm bookingForm) throws ParseException {
      ModelAndView mav = new ModelAndView("user/search_by_date");
-     int userId = bookingForm.getUserId();
   
      String inputFromDate = bookingForm.getFromDate();
      String inputToDate = bookingForm.getToDate();
@@ -184,6 +182,12 @@ public class ReservationController {
 		 availableRooms.add(roomRepository.findById(availableRoomId).get());
 	 }
 
+	 String message = null;
+	 if(availableRooms.size() == 0) {
+		 message = "There are no available rooms on the selected date";
+	 }
+	 
+	 mav.addObject("message", message);
 	 mav.addObject("availableRooms", availableRooms);
 	 mav.addObject("bookingForm", bookingForm);
      return mav;    

@@ -104,7 +104,7 @@ public class UserController {
      ModelAndView mav = new ModelAndView("user/profile_page");
      User userProfile = userService.findUserById(id);
      Set<Role> rolesList = userProfile.getRoles();
-     
+     mav.addObject("roles", rolesList);
      mav.addObject("userProfile", userProfile);
      return mav;
  }
