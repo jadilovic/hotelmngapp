@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -25,6 +26,7 @@ import com.avlija.hotel.form.BookingForm;
 import com.avlija.hotel.model.Date;
 import com.avlija.hotel.model.LocalDateAttributeConverter;
 import com.avlija.hotel.model.Reservation;
+import com.avlija.hotel.model.Role;
 import com.avlija.hotel.model.Room;
 import com.avlija.hotel.model.User;
 import com.avlija.hotel.repository.DateRepository;
@@ -90,10 +92,21 @@ public class UserController {
   ModelAndView model = new ModelAndView();
   Authentication auth = SecurityContextHolder.getContext().getAuthentication();
   User user = userService.findUserByEmail(auth.getName());
-  
+  long userId = user.getId();
   model.addObject("userName", user.getFirst_name() + " " + user.getLast_name());
+  model.addObject("userId", userId);
   model.setViewName("home/home");
   return model;
+ }
+ 
+ @RequestMapping("/profile/{id}")
+ public ModelAndView profilePage(@PathVariable(name = "id") Integer id) {
+     ModelAndView mav = new ModelAndView("user/profile_page");
+     User userProfile = userService.findUserById(id);
+     Set<Role> rolesList = userProfile.getRoles();
+     
+     mav.addObject("userProfile", userProfile);
+     return mav;
  }
  
  @RequestMapping(value= {"/admin"}, method=RequestMethod.GET)
