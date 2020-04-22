@@ -128,6 +128,8 @@ public class ReservationController {
  @RequestMapping("/search")
  public ModelAndView searchByDate() {
      ModelAndView mav = new ModelAndView("user/search_by_date");
+	 List<Room> availableRooms = new ArrayList<>();
+	 mav.addObject("availableRooms", availableRooms);
      BookingForm bookingForm = new BookingForm();
      mav.addObject("bookingForm", bookingForm);
      return mav;

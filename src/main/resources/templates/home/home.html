@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div th:replace="fragments/header :: header"/></div>
+<div th:include="fragments/header :: header"/></div>
 
  <div class="container">
  <div class="p-2" align="center">
@@ -35,7 +35,7 @@
 	</svg>   List All Services</a>
  </div>
 
- <div th:replace="fragments/footer :: footer"/></div>
+ <div th:include="fragments/footer :: footer"/></div>
  
 </body>
 </html>

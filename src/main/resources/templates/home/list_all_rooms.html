@@ -10,6 +10,8 @@
 </head>
 <body>
 
+<div th:replace="fragments/header :: header"/></div>
+
   <div class="container table-responsive" align="center">
     <p><b th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></b></p>
     
@@ -39,5 +41,8 @@
         </tbody>
     </table>
   </div>  
+  
+ <div th:replace="fragments/footer :: footer"/></div>
+ 
 </body>
 </html>
