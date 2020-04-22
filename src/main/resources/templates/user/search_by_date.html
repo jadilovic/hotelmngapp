@@ -3,6 +3,7 @@
  		xmlns:layout="http://www.w3.org/1999/xhtml"
 	  	xmlns:th="http://www.thymeleaf.org">
 <head>
+ 	<title>Search by Date</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -14,27 +15,33 @@
 
 <div th:include="fragments/header :: header"/></div>
 
-		<h1>Search Rooms by Date</h1>
+ <div class="p-2" align="center">
+   <h5>Search Rooms by Date</h5>
+ </div>
 
 <main class="container">
 	<form class="form-horizontal" role="form" th:action="@{/search}" th:object="${bookingForm}" method="post">
 		
-    <div class="row" style="padding-top: 100px">
-        <div class="col">
+        <div class="row" style="padding: 15px">
+          <div class="col">Check In
             <input id="datepicker1" data-date-format="dd/mm/yyyy" type="text" class="input-sm form-control" th:field="*{fromDate}" name="from" placeholder="From date">
-        </div>
-    <span class="input-group-addon">to</span>
-        <div class="col">
+          </div>
+
+          <div class="col">Check Out
             <input id="datepicker2" data-date-format="dd/mm/yyyy" type="text" class="input-sm form-control" th:field="*{toDate}" name="to" placeholder="To date">
-        </div>
-    </div>
-    
-    	<button type="submit" class="btn btn-lg btn-block btn-success">Search by Date</button>
+          </div>
+    	</div>
+    		<button type="submit" class="btn btn-lg btn-success">Search by Date</button>
 	</form>
       
       <p><b th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></b></p>
       
       <div th:if="${availableRooms.size() > 0}">
+       
+       <div class="p-2" align="center">
+   			<h5>List of Available Rooms</h5>
+ 		</div>
+ 		
         <div class="container table-responsive" align="center">
     
     	<table border="1" cellpadding="2" class="table-striped">
@@ -51,16 +58,10 @@
                 <td th:text="${room.num}">Room Number</td>
                 <td th:text="${room.roomType.getType()}">Room Type</td>
                 <td>
-                	<a class="btn btn-success" th:href="@{'/reserve/' + ${room.id}}">Room Booking</a>
+                    <a class="btn btn-warning" th:href="@{'/reserve/' + ${room.id}}">Reservations</a>
                 </td>
-                <td>
-                    <a class="btn btn-warning" th:href="@{'/edit/' + ${room.id}}">Reservations</a>
-                </td>
-                <td>
-                    <a class="btn btn-danger" th:href="@{'/delete/' + ${room.id}}">Additional Services</a>
-                </td>
-            	</tr>
-        		</tbody>
+               </tr>
+        	  </tbody>
     		</table>
   		</div>
       </div>

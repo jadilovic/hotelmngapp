@@ -142,7 +142,7 @@ public class ReservationController {
      String inputFromDate = bookingForm.getFromDate();
      String inputToDate = bookingForm.getToDate();
 
-     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
      LocalDate In = LocalDate.parse(inputFromDate, formatter);
 	 LocalDate Out = LocalDate.parse(inputToDate, formatter);
 	 In = In.plusDays(1);
@@ -195,11 +195,11 @@ public class ReservationController {
      return mav;    
  }
  
- @RequestMapping("/reserve/{id}")
- public ModelAndView reserveRoom(@PathVariable(name = "id") Integer id) {
+ @RequestMapping("/reserve/{roomNum}")
+ public ModelAndView reserveRoom(@PathVariable(name = "roomNum") Integer roomNum) {
      ModelAndView mav = new ModelAndView("user/reserve_room");
      BookingForm bookingForm = new BookingForm();
-     bookingForm.setUserId(id);
+     bookingForm.setRoomNum(roomNum);
      mav.addObject("bookingForm", bookingForm);
      return mav;
  }
