@@ -58,7 +58,12 @@
                 <td th:text="${room.num}">Room Number</td>
                 <td th:text="${room.roomType.getType()}">Room Type</td>
                 <td>
-                    <a class="btn btn-warning" th:href="@{'/reserve/' + ${room.id}}">Reservations</a>
+                	<form class="form-horizontal" role="form" th:action="@{/reserve1}" th:object="${bookingForm}" method="post">
+	    				<input class="form-control" type="text" th:value="${room.num}" id="roomNum" name="roomNum" />
+	    				<input class="form-control" type="text" th:value="*{fromDate}" id="fromDate" name="fromDate" />
+	    				<input class="form-control" type="text" th:value="*{toDate}" id="toDate" name="toDate" />
+	    				<button type="submit" class="btn btn-lg btn-warning">Reserve this Room</button>
+					</form>
                 </td>
                </tr>
         	  </tbody>

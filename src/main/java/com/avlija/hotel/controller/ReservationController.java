@@ -195,17 +195,15 @@ public class ReservationController {
      return mav;    
  }
  
- @RequestMapping("/reserve/{roomNum}")
- public ModelAndView reserveRoom(@PathVariable(name = "roomNum") Integer roomNum) {
+ @RequestMapping(value = "/reserve1", method = RequestMethod.POST)
+ public ModelAndView reserveRoom1(@ModelAttribute("command") BookingForm bookingForm) {
      ModelAndView mav = new ModelAndView("user/reserve_room");
-     BookingForm bookingForm = new BookingForm();
-     bookingForm.setRoomNum(roomNum);
      mav.addObject("bookingForm", bookingForm);
      return mav;
  }
  
- @RequestMapping(value = "/reserve", method = RequestMethod.POST)
- public ModelAndView reserveRoom(@ModelAttribute("command") BookingForm bookingForm) throws ParseException {
+ @RequestMapping(value = "/reserve2", method = RequestMethod.POST)
+ public ModelAndView reserveRoom2(@ModelAttribute("command") BookingForm bookingForm) throws ParseException {
      ModelAndView mav = new ModelAndView("user/reserve_confirmation");
      int userId = bookingForm.getUserId();
      User user = userServiceImpl.findUserById(userId);
@@ -214,7 +212,7 @@ public class ReservationController {
      //int daysBetween;
      
      //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM dd yyyy");
-     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
      String inputFromDate = bookingForm.getFromDate();
      String inputToDate = bookingForm.getToDate();
 
