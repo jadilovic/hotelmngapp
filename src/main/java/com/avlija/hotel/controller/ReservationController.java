@@ -145,8 +145,8 @@ public class ReservationController {
      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
      LocalDate In = LocalDate.parse(inputFromDate, formatter);
 	 LocalDate Out = LocalDate.parse(inputToDate, formatter);
-	 In = In.plusDays(1);
-	 Out = Out.plusDays(1);
+	// In = In.plusDays(1);
+	// Out = Out.plusDays(1);
 	 
 	 System.out.println("TEST 1, TEST 1, TEST 1");
 	 System.out.println("Check in: " + In.toString() + ", Check out: " + Out.toString());

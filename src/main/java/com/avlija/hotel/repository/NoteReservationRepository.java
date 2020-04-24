@@ -12,7 +12,7 @@ import com.avlija.hotel.model.NoteReservation;
 public interface NoteReservationRepository extends CrudRepository<NoteReservation, Long> {
 
 	
-	@Query("SELECT n FROM NoteReservation n WHERE n.checkIn < ?2 AND n.checkOut > ?1")
+	@Query("SELECT n FROM NoteReservation n WHERE n.checkIn <= ?2 AND n.checkOut >= ?1")
 	List<NoteReservation> findByDateFromTo(java.sql.Date start, java.sql.Date end);
 	
 	// Before
