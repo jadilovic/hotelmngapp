@@ -50,4 +50,10 @@ public User findUserById(int id) {
 	return userRepository.findById((long) id).get();
 }
 
+@Override
+public List<User> findAllActiveUsers(int active) {
+
+	return userRepository.findByActive(active);
+}
+
 }

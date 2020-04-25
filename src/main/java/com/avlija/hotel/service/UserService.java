@@ -14,4 +14,6 @@ public interface UserService {
  
  public User findUserById(int id);
  
+ public List<User> findAllActiveUsers(int active);
+ 
 }

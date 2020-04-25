@@ -1,50 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}"
-	  xmlns:th="http://www.thymeleaf.org">
+<html 	lang="eng"
+		xmlns:layout="http://www.w3.org/1999/xhtml"
+	  	xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-    <script type='text/javascript' src='//code.jquery.com/jquery-1.8.3.js'></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
-    <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+ 	<title>Reserve a Room</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
 <body>
 <div class="container">
-<h1>Room Reservation</h1>
-    
+
+<div th:include="fragments/header :: header"/></div>
+
+ <div class="p-2" align="center">
+   <h5>Reserve a Room on Selected Dates</h5>
+ </div>
+  
+  <main class="container">
     <form class="form-horizontal" role="form" th:action="@{/reserve2}" th:object="${bookingForm}" method="post">
       
-      <div class="form-group">
-        <label for="num" class="col-sm-2 control-label">User ID:</label>
-        <div class="col-sm-5 input-group">
-          <input type="text" th:field="*{userId}" placeholder="Enter User ID"/>
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <label for="roomNum" class="col-sm-2 control-label">Room Number:</label>
-        <div class="col-sm-5 input-group">
-          <input type="text" th:field="*{roomNum}" readonly="readonly"/>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="num" class="col-sm-2 control-label">Check In:</label>
-        <div class="col-sm-5 input-group">
-          <input type="text" th:field="*{fromDate}" readonly="readonly"/>
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <label for="roomNum" class="col-sm-2 control-label">Check Out:</label>
-        <div class="col-sm-5 input-group">
-          <input type="text" th:field="*{toDate}" readonly="readonly"/>
-        </div>
-      </div>
+      <table class="table table-striped">
+  <tbody>
+    <tr>
+      <th scope="row"><label for="userId">User ID:</label></th>
+      <td>
+      	  <select th:field="*{userId}">
+              <option th:each="user : ${activeUsers}"
+              th:value="${user.id}"
+              th:utext="${user.id}"/>
+          </select>
+     <!--  <input type="text" th:field="*{userId}" placeholder="Enter User ID"/> -->
+      </td>
+    </tr>
+    <tr>
+      <th scope="row"><label for="roomNum">Room Number:</label></th>
+      <td><input type="text" th:field="*{roomNum}" readonly="readonly"/></td>
+    </tr>
+    <tr>
+      <th scope="row"><label for="checkIn">Check In:</label></th>
+      <td><input type="text" th:field="*{fromDate}" readonly="readonly"/></td>
+    </tr>
+    <tr>
+      <th scope="row"><label for="checkOut">Check Out:</label></th>
+      <td><input type="text" th:field="*{toDate}" readonly="readonly"/></td>
+    </tr>
+  </tbody>
+</table>
 
       <div class="form-group ">
         <div class="col-sm-offset-2 col-sm-4">
@@ -52,7 +57,12 @@
         </div>
       </div>
     </form>
-    
-   </div> 
+    </main>
+ 	<div th:insert="fragments/footer :: footer"/></div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+ </div> 
 </body>
 </html>

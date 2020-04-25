@@ -138,6 +138,8 @@ public class ReservationController {
  @RequestMapping(value = "/search", method = RequestMethod.POST)
  public ModelAndView searchByDate(@ModelAttribute("command") BookingForm bookingForm) throws ParseException {
      ModelAndView mav = new ModelAndView("user/search_by_date");
+
+	 String message = null;
   
      String inputFromDate = bookingForm.getFromDate();
      String inputToDate = bookingForm.getToDate();
@@ -184,10 +186,14 @@ public class ReservationController {
 		 availableRooms.add(roomRepository.findById(availableRoomId).get());
 	 }
 
-	 String message = null;
 	 if(availableRooms.size() == 0) {
 		 message = "There are no available rooms on the selected date";
 	 }
+	 
+     if(inputFromDate.equals(inputToDate)) {
+    	 message = "Check In date and Check Out date cannot be the same";
+    	 availableRooms = new ArrayList<>();
+     }
 	 
 	 mav.addObject("message", message);
 	 mav.addObject("availableRooms", availableRooms);
@@ -198,6 +204,8 @@ public class ReservationController {
  @RequestMapping(value = "/reserve1", method = RequestMethod.POST)
  public ModelAndView reserveRoom1(@ModelAttribute("command") BookingForm bookingForm) {
      ModelAndView mav = new ModelAndView("user/reserve_room");
+     List<User> activeUsers = userServiceImpl.findAllActiveUsers(1);
+     mav.addObject("activeUsers", activeUsers);
      mav.addObject("bookingForm", bookingForm);
      return mav;
  }
@@ -243,19 +251,7 @@ public class ReservationController {
 	 end = converter.convertToDatabaseColumn(Out);
 	 res.setCheckIn(start);
 	 res.setCheckOut(end);
-	 /*
-	 System.out.println("TEST 2, TEST 2, TEST 2");
-	 Room bookedRoom = roomRepository.findByNum(roomNum);
-	 LocalDateAttributeConverter converter = new LocalDateAttributeConverter();
-	 java.sql.Date startDate = converter.convertToDatabaseColumn(checkIn);
-	 java.sql.Date endDate = converter.convertToDatabaseColumn(checkOut);
-	 
-	 Date date = new Date(startDate, endDate, bookedRoom);
-	 dateRepository.save(date);
-	 
-	 System.out.println("TEST 3, TEST 3, TEST 3");
-	 res.getDates().add(date);
-	 reservationRepository.save(res); */
+
 	 mav.addObject("reservation", res);
      return mav;    
  }

@@ -31,10 +31,13 @@
             <input id="datepicker2" data-date-format="dd/mm/yyyy" type="text" class="input-sm form-control" th:field="*{toDate}" name="to" placeholder="To date">
           </div>
     	</div>
+    	<div class="p-2">
     		<button type="submit" class="btn btn-lg btn-success">Search by Date</button>
+    	</div>
 	</form>
-      
-      <p><b th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></b></p>
+       <div th:if="${message}" class="p-2 bg-danger text-white" align="center" >
+         <b th:text="${message}"></b>
+       </div>
       
       <div th:if="${availableRooms.size() > 0}">
        
