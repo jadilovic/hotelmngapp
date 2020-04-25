@@ -19,12 +19,13 @@
   <div class="container table-responsive" align="center">
     <p><b th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></b></p>
     
-    <table border="1" cellpadding="2" class="table-striped">
+    <table class="table table-bg table-striped">
         <thead>
             <tr>
                 <th scope="col">Room ID</th>
                 <th scope="col">Room Number</th>
                 <th scope="col">Room Type</th>
+                <th scope="col">Price per Day</th>
             </tr>
         </thead>
         <tbody>
@@ -32,20 +33,17 @@
                 <td th:text="${room.id}">Room ID</td>
                 <td th:text="${room.num}">Room Number</td>
                 <td th:text="${room.roomType.getType()}">Room Type</td>
-                <td>
-                	<a class="btn btn-success" th:href="@{/search}">Search by Date</a>
-                </td>
-                <td>
-                    <a class="btn btn-warning" th:href="@{'/edit/' + ${room.id}}">Reservations</a>
-                </td>
-                <td>
-                    <a class="btn btn-danger" th:href="@{'/delete/' + ${room.id}}">Additional Services</a>
-                </td>
+                <td th:text="${room.roomType.getCost()}">Room Type</td>
             </tr>
         </tbody>
     </table>
+      
+   <div>
+       <a class="p-2 btn btn-success" th:href="@{/search}">Search by Date</a>
+   </div>
+   
   </div>  
-  
+
  <div th:replace="fragments/footer :: footer"/></div>
  
 </body>

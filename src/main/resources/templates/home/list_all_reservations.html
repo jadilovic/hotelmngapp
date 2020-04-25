@@ -2,13 +2,19 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
  xmlns:th="http://www.thymeleaf.org">
 <head>
- <title>Sign up</title>
+ <title>All Reservations</title>
  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
 </head>
 <body>
+
+<div th:replace="fragments/header :: header"/></div>
+
+ <div class="p-2" align="center">
+   <h5>Listing of All Reservations</h5>
+ </div>
 
   <div class="container table-responsive" align="center">
     <p><b th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></b></p>
@@ -55,5 +61,8 @@
         </tbody>
     </table>
   </div>  
+  
+ <div th:replace="fragments/footer :: footer"/></div>
+ 
 </body>
 </html>

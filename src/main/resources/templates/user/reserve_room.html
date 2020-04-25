@@ -26,12 +26,12 @@
       <table class="table table-striped">
   <tbody>
     <tr>
-      <th scope="row"><label for="userId">User ID:</label></th>
+      <th scope="row"><label for="userId">User E-mail:</label></th>
       <td>
       	  <select th:field="*{userId}">
               <option th:each="user : ${activeUsers}"
               th:value="${user.id}"
-              th:utext="${user.id}"/>
+              th:utext="${user.email}"/>
           </select>
      <!--  <input type="text" th:field="*{userId}" placeholder="Enter User ID"/> -->
       </td>
