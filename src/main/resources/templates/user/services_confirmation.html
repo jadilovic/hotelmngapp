@@ -1,24 +1,34 @@
 <!DOCTYPE HTML>
-<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}"
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Parts List</title>
-        <meta charset="utf-8">
-        <style>.padd {padding-top: 80px;}</style>
-</head>
-<body class="padd">
-<div layout:fragment="content" class="container bg-light">
+    <title>Added Services Confirmation</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+
+<div th:include="fragments/header :: header"/></div>
+
+ <div class="p-2" align="center">
+   <h5>Additional Services in the Reservation Confirmation</h5>
+ </div>
+ 
   <div class="container table-responsive" align="center">
     <p><b th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></b></p>
     
-    <table border="1" cellpadding="2" class="table-striped">
+    <table class="table-striped">
         <thead>
             <tr>
                 <th scope="col">Reservation ID</th>
                 <th scope="col">Date of reservation</th>
                 <th scope="col">Number of days</th>
-                <th scope="col">Total Cost</th>
+                <th scope="col">Total Room Cost</th>
+                <th scope="col">Total Services Cost</th>
                 <th scope="col">User ID</th>
                 <th scope="col">User Name</th>
                 <th scope="col">Room Number</th>
@@ -28,18 +38,21 @@
         <tbody>
             <tr scope="row" th:object="${reservation}">
                 <td th:text="*{id}">Reservation ID</td>
-                <td th:text="*{resDate}">Date of Reservation</td>
+                <td th:text="*{created}">Date of Reservation</td>
                 <td th:text="*{resDays}">Number of Days</td>
                 <td th:text="*{totalCost}">Total Cost</td>
+                <td th:text="*{servicesCost}">Services Cost</td>
                 <td th:text="*{user.getId()}">User ID</td>
                 <td th:text="*{user.getFirst_name()}">User Name</td>
                 <td th:text="*{room.getNum()}">Room Number</td>
                 <td th:text="*{room.getRoomType().getType()}">Room Type</td>
+            </tr>
+            <tr>
                 <td>
                 	<a class="btn btn-success" th:href="@{'/editbooking/' + ${reservation.id}}">Edit Reservation</a>
                 </td>
                 <td>
-                    <a class="btn btn-warning" th:href="@{'/edit/' + ${reservation.id}}">Add Services</a>
+                    <a class="btn btn-warning" th:href="@{'/edit/' + ${reservation.id}}">Add / Remove Services</a>
                 </td>
                 <td>
                     <a class="btn btn-danger" th:href="@{'/delete/' + ${reservation.id}}">Poništi</a>
@@ -48,8 +61,13 @@
         </tbody>
     </table>
     
-        
-    <table border="1" cellpadding="2" class="table-striped">
+   <div class="p-2">
+   
+  <div class="p-2" align="center">
+   <h5>Included Services</h5>
+ </div>
+ 
+   <table class="table-striped">
         <thead>
             <tr>
                 <th scope="col">Service ID</th>
@@ -62,20 +80,20 @@
                 <td th:text="${service.id}">Service ID</td>
                 <td th:text="${service.name}">Name</td>
                 <td th:text="${service.cost}">Cost</td>
-                <td>
-                	<a class="btn btn-success" th:href="@{'/buysell/' + ${service.id}}">Add Service</a>
-                </td>
-                <td>
-                    <a class="btn btn-warning" th:href="@{'/edit/' + ${service.id}}">Edit Service</a>
-                </td>
-                <td>
-                    <a class="btn btn-danger" th:href="@{'/delete/' + ${service.id}}">Delete Service</a>
-                </td>
             </tr>
         </tbody>
     </table>
+   </div>   
+    
   </div>   
+  
+        <div th:insert="fragments/footer :: footer"/></div>
+  
 </div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 </body>
 </html>

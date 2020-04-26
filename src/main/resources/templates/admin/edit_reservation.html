@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:th="http://www.thymeleaf.org">
+<head>
+ <title>Edit Reservation</title>
+ <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+ <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<div th:include="fragments/header :: header"/></div>
+
+ <div class="container">
+     <form class="form-horizontal" role="form" method="POST" th:action="@{/editreserve2}" th:object="${reservation}">
+     
+         <div class="row">
+             <div class="p-2" align="center">
+                 <h5>Edit Reservation</h5>
+             </div>
+         </div>
+         
+         <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Data</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Reservation ID:</th>
+      	<td>          
+      		<input type="text" th:field="*{id}" readonly="readonly" />
+      	</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+    </tr>
+  </tbody>
+</table>
+         
+         <!-- FIRST NAME
+         <div class="row">
+             <div class="col-md-3 field-label-responsive">
+                 <label for="name">First Name</label>
+             </div>
+             <div class="col-md-6">
+                 <div class="form-group">
+                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                         <div class="input-group-addon" style="width: 2.6rem"></div>
+                         <input type="text" th:field="*{first_name}" class="form-control" id="first_name"
+                                placeholder="First Name" required autofocus>
+                     </div>
+                 </div>
+             </div>
+         </div>
+          -->
+         <div class="row">
+             <div class="col-md-3"></div>
+             <div class="col-md-6">
+                <button type="submit" class="btn btn-success"> Register</button>
+             	<a th:href="@{/logout}" class="btn btn-secondary" role="button" aria-pressed="true">Log Out</a>
+             </div>
+         </div>
+     </form>
+ </div>
+ 
+  <div th:include="fragments/footer :: footer"/></div>
+ 
+</body>
+</html>

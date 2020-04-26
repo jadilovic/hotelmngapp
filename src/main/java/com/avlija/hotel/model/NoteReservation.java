@@ -4,7 +4,9 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="note_reservation")
@@ -23,6 +25,15 @@ public class NoteReservation implements Serializable{
     private java.sql.Date checkIn;
     private java.sql.Date checkOut;
     
+    @Column(name="reservation_days")
+    private int resDays;
+    
+    @Column(name="total_cost")
+    private double totalCost;
+    
+    @Column(name="services_cost")
+    private double servicesCost;
+    
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "room_id")
     private Room room;
@@ -30,18 +41,32 @@ public class NoteReservation implements Serializable{
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+    
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "note_reservation_service",
+            joinColumns = {
+                    @JoinColumn(name = "reservation_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "service_id", referencedColumnName = "service_id",
+                            nullable = false, updatable = false)})
+    private Set<AddService> services = new HashSet<>();
 
+    
     public NoteReservation() {
     }
 
     public NoteReservation(boolean booked, Date created, java.sql.Date checkIn, java.sql.Date checkOut, 
-    						Room room, User user) {
+    						Room room, User user, int resDays, double totalCost, double servicesCost) {
 		this.booked = booked;
 		this.created = created;
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
 		this.room = room;
 		this.user = user;
+		this.resDays = resDays;
+		this.totalCost = totalCost;
+		this.servicesCost = servicesCost;
 	}
 
 	/**
@@ -140,6 +165,62 @@ public class NoteReservation implements Serializable{
 	 */
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	/**
+	 * @return the resDays
+	 */
+	public int getResDays() {
+		return resDays;
+	}
+
+	/**
+	 * @param resDays the resDays to set
+	 */
+	public void setResDays(int resDays) {
+		this.resDays = resDays;
+	}
+
+	/**
+	 * @return the totalCost
+	 */
+	public double getTotalCost() {
+		return totalCost;
+	}
+
+	/**
+	 * @param totalCost the totalCost to set
+	 */
+	public void setTotalCost(double totalCost) {
+		this.totalCost = totalCost;
+	}
+
+	/**
+	 * @return the servicesCost
+	 */
+	public double getServicesCost() {
+		return servicesCost;
+	}
+
+	/**
+	 * @param servicesCost the servicesCost to set
+	 */
+	public void setServicesCost(double servicesCost) {
+		this.servicesCost = servicesCost;
+	}
+
+	/**
+	 * @return the services
+	 */
+	public Set<AddService> getServices() {
+		return services;
+	}
+
+	/**
+	 * @param services the services to set
+	 */
+	public void setServices(Set<AddService> services) {
+		this.services = services;
 	}
 
 	@Override

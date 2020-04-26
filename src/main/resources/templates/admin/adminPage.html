@@ -9,8 +9,15 @@
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
 </head>
 <body>
+
+<div th:include="fragments/header :: header"/></div>
+
  <div class="container">
-  <h2>Hi <span th:utext="${userName}"></span>, this is the Admin Page.</h2>
+ 
+ <div class="p-2" align="center">
+  <h5>Hi <span th:utext="${userName}"></span>, this is the Admin Page.</h5>
+  </div>
+  
    <a th:href="@{/signup}" class="btn-primary btn-lg btn-block" role="button" aria-pressed="true">Sign Up</a>
    <p></p>
      <a th:href="@{/allreservations}" class="btn-warning btn-lg btn-block" role="button" aria-pressed="true">List All Reservations</a>
@@ -22,5 +29,8 @@
   <a th:href="@{/logout}" class="btn-secondary btn-lg btn-block" role="button" aria-pressed="true">Sign out</a>
      <p></p>
  </div>
+ 
+  <div th:include="fragments/footer :: footer"/></div>
+ 
 </body>
 </html>

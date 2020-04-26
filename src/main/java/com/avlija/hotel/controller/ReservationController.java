@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -94,6 +95,7 @@ public class ReservationController {
      BookingForm bookingForm = new BookingForm();
      bookingForm.setReservationId(id);
      List<AddService> serviceList = (List<AddService>) addServiceRepository.findAll();
+     bookingForm.setServices(noteReservationRepository.findById(id).get().getServices());
      //bookingForm.setServices(serviceList);
      mav.addObject("bookingForm", bookingForm);
      mav.addObject("serviceList", serviceList);
@@ -104,22 +106,20 @@ public class ReservationController {
  public ModelAndView bookRoom(@ModelAttribute("command") BookingForm bookingForm) throws ParseException {
      ModelAndView mav = new ModelAndView("user/services_confirmation");
     
-     List<AddService> selectedServices = bookingForm.getServices();
+     Set<AddService> selectedServices = bookingForm.getServices();
      double totalCostServices = 0;
      for(AddService service: selectedServices) {
     	 totalCostServices += service.getCost();
      }
      
-     Reservation res = reservationImpl.findReservationById(bookingForm.getReservationId());
-     double resCost = res.getTotalCost();
-     resCost += totalCostServices;
-     res.setTotalCost(resCost);
+     NoteReservation res = noteReservationRepository.findById(bookingForm.getReservationId()).get();
+     res.setServicesCost(totalCostServices);
      
-     reservationImpl.saveReservation(res);
+     noteReservationRepository.save(res);
      
      res.getServices().addAll(selectedServices);
 	 
-	 reservationImpl.saveReservation(res);
+	 noteReservationRepository.save(res);
 
 	mav.addObject("reservation", res);
      return mav;    
@@ -217,9 +217,8 @@ public class ReservationController {
      User user = userServiceImpl.findUserById(userId);
      int roomNum = bookingForm.getRoomNum();
      Room room = roomRepository.findByNum(roomNum);
-     //int daysBetween;
-     
-     //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM dd yyyy");
+     int daysBetween;
+
      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
      String inputFromDate = bookingForm.getFromDate();
      String inputToDate = bookingForm.getToDate();
@@ -236,16 +235,16 @@ public class ReservationController {
      System.out.println(start.toString());
      System.out.println(end.toString());
 	 
-	// daysBetween = (int) ChronoUnit.DAYS.between(checkIn, checkOut);
-	// System.out.println ("Days: " + daysBetween);
-	// double roomCost = roomRepository.findByNum(roomNum).getRoomType().getCost();
-	// System.out.println(roomCost);
-	// double totalRoomCost = roomCost * daysBetween;
+     daysBetween = (int) ChronoUnit.DAYS.between(checkIn, checkOut);
+     System.out.println ("Days: " + daysBetween);
+     double roomCost = roomRepository.findByNum(roomNum).getRoomType().getCost();
+     System.out.println(roomCost);
+     double totalRoomCost = roomCost * daysBetween;
 	    
 	 	java.util.Date dateNow = new java.util.Date();  
 	 
 	 System.out.println("TEST 1, TEST 1, TEST 1");
-	 NoteReservation res = new NoteReservation(true, dateNow, start, end, room, user);
+	 NoteReservation res = new NoteReservation(true, dateNow, start, end, room, user, daysBetween, totalRoomCost, 0);
 	 noteReservationRepository.save(res);
 	 start = converter.convertToDatabaseColumn(In);
 	 end = converter.convertToDatabaseColumn(Out);
@@ -254,6 +253,14 @@ public class ReservationController {
 
 	 mav.addObject("reservation", res);
      return mav;    
+ }
+ 
+ @RequestMapping(value = "/editreserve1/{id}")
+ public ModelAndView editRes1(@PathVariable(name = "id") Long id) {
+     ModelAndView mav = new ModelAndView("admin/edit_reservation");
+     NoteReservation reservation = noteReservationRepository.findById(id).get();
+     mav.addObject("reservation", reservation);
+     return mav;
  }
  
 }

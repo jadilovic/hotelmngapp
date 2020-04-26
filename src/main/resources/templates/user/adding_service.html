@@ -19,22 +19,33 @@
    <h5>Adding Additional Service to the Reservation</h5>
  </div>
     
-    <div align="center">
+  <div align="center">
     <form class="form-horizontal" role="form" th:action="@{/addservice}" th:object="${bookingForm}" method="post">
       
       <div class="form-group">
-        <label for="num" class="col-sm-2 control-label">Reservation ID:</label>
-        <div class="col-sm-5 input-group">
+        <label for="num" class="col-sm-2 control-label"><b>Reservation ID:</b></label>
           <input type="text" th:field="*{reservationId}" readonly="readonly" />
-        </div>
       </div>
       
-    <ul>
-        <li th:each="service : ${serviceList}">
-            <input type="checkbox" th:field="*{services}" th:value="${service.getId()}" />
-            <label th:for="${#ids.prev('services')}" th:text="${service.toString()}">RED</label>
-        </li>
-    </ul>
+ <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Select Service Name/s</th>
+      <th scope="col">Cost in KM</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="service : ${serviceList}">
+      <th scope="row"><span th:text="${serviceStat.count}"></span></th>
+      	<td>
+      		<input type="checkbox" th:field="*{services}" th:value="${service.getId()}" />
+      		<label th:for="${#ids.prev('services')}" th:text="${service.getName()}"></label>
+      	</td>
+      <td><label th:for="${#ids.prev('services')}" th:text="${service.getCost()}"></label></td>
+    </tr>
+  </tbody>
+</table>
       
       <div class="form-group ">
         <div class="col-sm-offset-2 col-sm-4">
@@ -42,7 +53,7 @@
         </div>
       </div>
     </form>
-    </div>
+  </div>
     
       <div th:insert="fragments/footer :: footer"/></div>
     

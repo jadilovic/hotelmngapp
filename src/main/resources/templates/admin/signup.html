@@ -9,6 +9,9 @@
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
 </head>
 <body>
+
+<div th:include="fragments/header :: header"/></div>
+
  <div class="container">
      <form class="form-horizontal" role="form" method="POST" th:action="@{/signup}" th:object="${user}">
       <div class="row">
@@ -20,8 +23,8 @@
          </div>
          <div class="row">
              <div class="col-md-3"></div>
-             <div class="col-md-6">
-                 <h2>Register New User</h2>
+             <div class="p-2" align="center">
+                 <h5>Register New User</h5>
                  <hr>
              </div>
          </div>
@@ -34,7 +37,7 @@
              <div class="col-md-6">
                  <div class="form-group">
                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                         <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                         <div class="input-group-addon" style="width: 2.6rem"></div>
                          <input type="text" th:field="*{first_name}" class="form-control" id="first_name"
                                 placeholder="First Name" required autofocus>
                      </div>
@@ -50,7 +53,7 @@
              <div class="col-md-6">
                  <div class="form-group">
                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                         <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                         <div class="input-group-addon" style="width: 2.6rem"></div>
                          <input type="text" th:field="*{last_name}" class="form-control" id="last_name"
                                 placeholder="Last name" required autofocus>
                      </div>
@@ -66,7 +69,7 @@
              <div class="col-md-6">
                  <div class="form-group">
                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                         <div class="input-group-addon" style="width: 2.6rem"><i class="fas fa-at"></i></div>
+                         <div class="input-group-addon" style="width: 2.6rem"></div>
                          <input type="text" th:field="*{email}" class="form-control" id="email"
                                 placeholder="user@sample.com" required autofocus>
                      </div>
@@ -88,7 +91,7 @@
              <div class="col-md-6">
                  <div class="form-group has-danger">
                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                         <div class="input-group-addon" style="width: 2.6rem"><i class="fas fa-venus-mars"></i></div>
+                         <div class="input-group-addon" style="width: 2.6rem"></div>
                          <input type="text" th:field="*{gender}" class="form-control" id="gender"
                                 placeholder="Gender" required>
                      </div>
@@ -110,7 +113,7 @@
              <div class="col-md-6">
                  <div class="form-group has-danger">
                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                         <div class="input-group-addon" style="width: 2.6rem"><i class="fas fa-id-card"></i></div>
+                         <div class="input-group-addon" style="width: 2.6rem"></div>
                          <input type="text" th:field="*{id_card_num}" class="form-control" id="id_card_num"
                                 placeholder="ID Card Number" required>
                      </div>
@@ -132,7 +135,7 @@
              <div class="col-md-6">
                  <div class="form-group has-danger">
                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                         <div class="input-group-addon" style="width: 2.6rem"><i class="fas fa-universal-access"></i></div>
+                         <div class="input-group-addon" style="width: 2.6rem"></div>
                          <input type="text" th:field="*{age}" class="form-control" id="age"
                                 placeholder="Age" required>
                      </div>
@@ -154,7 +157,7 @@
              <div class="col-md-6">
                  <div class="form-group has-danger">
                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                         <div class="input-group-addon" style="width: 2.6rem"><i class="fas fa-universal-access"></i></div>
+                         <div class="input-group-addon" style="width: 2.6rem"></div>
                     		<select th:field="*{role}">
     							<option th:value="'GUEST'" th:text="GUEST"></option>
     							<option th:value="'ADMIN'" th:text="ADMIN"></option>
@@ -172,7 +175,7 @@
              <div class="col-md-6">
                  <div class="form-group has-danger">
                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                         <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
+                         <div class="input-group-addon" style="width: 2.6rem"></div>
                          <input type="password" th:field="*{password}" class="form-control" id="password"
                                 placeholder="Password" required>
                      </div>
@@ -188,11 +191,14 @@
          <div class="row">
              <div class="col-md-3"></div>
              <div class="col-md-6">
-                <button type="submit" class="btn btn-success"><i class="fa fa-user-plus"></i> Register</button>
+                <button type="submit" class="btn btn-success"> Register</button>
              	<a th:href="@{/logout}" class="btn btn-secondary" role="button" aria-pressed="true">Log Out</a>
              </div>
          </div>
      </form>
  </div>
+ 
+  <div th:include="fragments/footer :: footer"/></div>
+ 
 </body>
 </html>
