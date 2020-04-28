@@ -145,49 +145,7 @@ public class ReservationController {
      String inputFromDate = bookingForm.getFromDate();
      String inputToDate = bookingForm.getToDate();
 
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	    LocalDate In = LocalDate.parse(inputFromDate, formatter);
-		 LocalDate Out = LocalDate.parse(inputToDate, formatter);
-		// In = In.plusDays(1);
-		// Out = Out.plusDays(1);
-		 
-		 System.out.println("TEST 1, TEST 1, TEST 1");
-		 System.out.println("Check in: " + In.toString() + ", Check out: " + Out.toString());
-		 
-		 LocalDateAttributeConverter converter = new LocalDateAttributeConverter();
-		 java.sql.Date start = converter.convertToDatabaseColumn(In);
-		 java.sql.Date end = converter.convertToDatabaseColumn(Out);
-		 
-		 System.out.println("TEST 1.5, TEST 1.5, TEST 1.5");
-		 System.out.println("Check in: " + start.toString() + ", Check out: " + end.toString());
-		 
-		 List<NoteReservation> reservations = new ArrayList<>();
-		 reservations = noteReservationRepository.findByDateFromTo(start, end);
-		 
-		 List<Long> bookedRoomsIds = new ArrayList<>();
-		 
-		for(NoteReservation reservation: reservations) {
-			bookedRoomsIds.add(reservation.getRoom().getId());
-			 System.out.println("RESERVATION FROM TO DATES: Start:" + reservation.toString() + ", End: " + reservation.toString());
-		 }
-
-		 System.out.println("TEST 3, TEST 3, TEST 3");
-		 List<Long> allRoomsIds = roomRepository.findAllIds();
-
-		 System.out.println("TEST 4, TEST 4, TEST 4");
-
-		 System.out.println("ALL ROOMS IDS: " + allRoomsIds.toString());
-		 System.out.println("BOOKED ROOMS IDS: " + bookedRoomsIds.toString());
-		 
-		 // Removing booked IDs from all room IDs
-		 	allRoomsIds.removeAll(bookedRoomsIds);
-		 
-		 System.out.println("AVAILABLE ROOMS IDS: " + allRoomsIds.toString());
-		 
-		 List<Room> availableRooms = new ArrayList<>();
-		 for(long availableRoomId: allRoomsIds) {
-			 availableRooms.add(roomRepository.findById(availableRoomId).get());
-		 }
+     List<Room> availableRooms = searchByDate(inputFromDate, inputToDate);
 
 	 if(availableRooms.size() == 0) {
 		 message = "There are no available rooms on the selected date";
@@ -268,4 +226,60 @@ public class ReservationController {
      return mav;
  }
  
+ @RequestMapping(value = "/editreserve2")
+ public ModelAndView editRes2(@ModelAttribute("command") BookingForm bookingForm) throws ParseException {
+     ModelAndView mav = new ModelAndView("user/reserve_confirmation");
+     int userId = bookingForm.getUserId();
+     User user = userServiceImpl.findUserById(userId);
+     int roomNum = bookingForm.getRoomNum();
+     Room room = roomRepository.findByNum(roomNum);
+     return mav;
+ }
+ 
+ public List<Room> searchByDate(String inputFromDate, String inputToDate) {
+	 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	 LocalDate In = LocalDate.parse(inputFromDate, formatter);
+		 LocalDate Out = LocalDate.parse(inputToDate, formatter);
+		// In = In.plusDays(1);
+		// Out = Out.plusDays(1);
+		 
+		 System.out.println("TEST 1, TEST 1, TEST 1");
+		 System.out.println("Check in: " + In.toString() + ", Check out: " + Out.toString());
+		 
+		 LocalDateAttributeConverter converter = new LocalDateAttributeConverter();
+		 java.sql.Date start = converter.convertToDatabaseColumn(In);
+		 java.sql.Date end = converter.convertToDatabaseColumn(Out);
+		 
+		 System.out.println("TEST 1.5, TEST 1.5, TEST 1.5");
+		 System.out.println("Check in: " + start.toString() + ", Check out: " + end.toString());
+		 
+		 List<NoteReservation> reservations = new ArrayList<>();
+		 reservations = noteReservationRepository.findByDateFromTo(start, end);
+		 
+		 List<Long> bookedRoomsIds = new ArrayList<>();
+		 
+		for(NoteReservation reservation: reservations) {
+			bookedRoomsIds.add(reservation.getRoom().getId());
+			 System.out.println("RESERVATION FROM TO DATES: Start:" + reservation.toString() + ", End: " + reservation.toString());
+		 }
+
+		 System.out.println("TEST 3, TEST 3, TEST 3");
+		 List<Long> allRoomsIds = roomRepository.findAllIds();
+
+		 System.out.println("TEST 4, TEST 4, TEST 4");
+
+		 System.out.println("ALL ROOMS IDS: " + allRoomsIds.toString());
+		 System.out.println("BOOKED ROOMS IDS: " + bookedRoomsIds.toString());
+		 
+		 // Removing booked IDs from all room IDs
+		 	allRoomsIds.removeAll(bookedRoomsIds);
+		 
+		 System.out.println("AVAILABLE ROOMS IDS: " + allRoomsIds.toString());
+		 
+		 List<Room> availableRooms = new ArrayList<>();
+		 for(long availableRoomId: allRoomsIds) {
+			 availableRooms.add(roomRepository.findById(availableRoomId).get());
+		 }
+		return availableRooms;
+ 	}
 }

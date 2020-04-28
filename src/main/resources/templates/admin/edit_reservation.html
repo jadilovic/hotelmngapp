@@ -13,13 +13,13 @@
 <div th:include="fragments/header :: header"/></div>
 
  <div class="container">
-     <form class="form-horizontal" role="form" method="POST" th:action="@{/editreserve2}" th:object="${reservation}">
+     <form class="form-horizontal" role="form" method="POST" th:action="@{/editreserve2}" th:object="${bookingForm}">
 
    <div class="p-2" align="center">
       <h5>Edit Reservation</h5>
    </div>
 
- <table class="table table-striped">
+ <table class="table table-striped" th:object="${reservation}">
   <thead>
     <tr>
       <th scope="col">Name</th>
@@ -27,59 +27,46 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">Reservation ID:</th>
-      	<td th:text="*{id}">          
-      	<!-- <input type="text" th:field="*{id}" readonly="readonly" /> -->	
-      		
-      	</td>
-    </tr>
-    <tr>
-      <th scope="row">Check In:</th>
-      <td th:text="*{checkIn}">Check IN</td>
-    </tr>
-    <tr>
-      <th scope="row">Check Out:</th>
-      <td th:text="*{checkOut}">Check OUT</td>
-   </tr>
    <tr>
       <th scope="row">Guest Name:</th>
       <td th:text="*{user.getFirst_name()} + ' ' + *{user.getLast_name()}">Full Name</td>
    </tr>
-       <tr>
+    <tr>
       <th scope="row">Reservation ID:</th>
-      	<td th:text="*{id}">          
-      	 <input type="text" th:field="*{id}" readonly="readonly" />
-      		
-      	</td>
+      	<td th:text="*{id}"></td>
     </tr>
-  </tbody>
-</table>
-         
-         <!-- FIRST NAME
-         <div class="row">
-             <div class="col-md-3 field-label-responsive">
-                 <label for="name">First Name</label>
-             </div>
-             <div class="col-md-6">
-                 <div class="form-group">
-                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                         <div class="input-group-addon" style="width: 2.6rem"></div>
-                         <input type="text" th:field="*{first_name}" class="form-control" id="first_name"
-                                placeholder="First Name" required autofocus>
-                     </div>
-                 </div>
-             </div>
-         </div>
-          -->
-         <div class="row">
-             <div class="col-md-3"></div>
-             <div class="col-md-6">
-                <button type="submit" class="btn btn-success"> Register</button>
-             	<a th:href="@{/logout}" class="btn btn-secondary" role="button" aria-pressed="true">Log Out</a>
-             </div>
-         </div>
-     </form>
+    <tr>
+      <th scope="row">Check In:</th>
+      <td><input type="text" th:field="*{checkIn}" th:value="${fromDate}" readonly="readonly"/></td>
+    </tr>
+    <tr>
+      <th scope="row">Check Out:</th>
+      <td><input type="text" th:field="*{checkOut}" th:value="${toDate}" readonly="readonly"/></td>
+   </tr>
+    <tr>
+      <th scope="row">Room Number:</th>
+      	<td th:text="*{room.getNum()}"></td>
+    </tr>
+   <tr>
+      <th scope="row"><button type="submit" class="btn btn-success">Search New Room with Same Dates</button></th>
+      <td></td>
+   </tr>
+   <tr>
+      <th scope="row">List of additional services used:</th>
+      	<td></td>
+    </tr>
+        <tr th:each="service : ${reservation.getServices()}">
+       		<td th:if="${service.name}" th:text="${service.name}">Name</td>
+       		<td th:if="${service.cost}" th:text="${service.cost}">Cost</td>
+    	</tr>
+    <tr>
+      <th scope="row"><a th:href="@{'/addservice/' + ${reservation.id}}" class="btn btn-primary" role="button" aria-pressed="true">Add / Remove Service</a>
+		</th>
+      	<td></td>
+    </tr>
+  	</tbody>
+	</table>
+  </form>
  </div>
  
   <div th:include="fragments/footer :: footer"/></div>

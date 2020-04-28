@@ -21,34 +21,6 @@ public class BookingForm {
     private int roomId;
     
     private List<Room> rooms;
-    
-    /**
-	 * @return the roomId
-	 */
-	public int getRoomId() {
-		return roomId;
-	}
-
-	/**
-	 * @param roomId the roomId to set
-	 */
-	public void setRoomId(int roomId) {
-		this.roomId = roomId;
-	}
-
-	/**
-	 * @return the rooms
-	 */
-	public List<Room> getRooms() {
-		return rooms;
-	}
-
-	/**
-	 * @param rooms the rooms to set
-	 */
-	public void setRooms(List<Room> rooms) {
-		this.rooms = rooms;
-	}
 
 	private long dateId;
 
@@ -90,6 +62,35 @@ public class BookingForm {
 		this.multiCheckboxSelectedValues = multiCheckboxSelectedValues;
 		this.radioButtonSelectedValue = radioButtonSelectedValue;
 		this.dropdownSelectedValue = dropdownSelectedValue;
+	}
+	
+	   
+    /**
+	 * @return the roomId
+	 */
+	public int getRoomId() {
+		return roomId;
+	}
+
+	/**
+	 * @param roomId the roomId to set
+	 */
+	public void setRoomId(int roomId) {
+		this.roomId = roomId;
+	}
+
+	/**
+	 * @return the rooms
+	 */
+	public List<Room> getRooms() {
+		return rooms;
+	}
+
+	/**
+	 * @param rooms the rooms to set
+	 */
+	public void setRooms(List<Room> rooms) {
+		this.rooms = rooms;
 	}
 
 	/**
