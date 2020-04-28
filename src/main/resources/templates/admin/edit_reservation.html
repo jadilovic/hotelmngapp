@@ -14,14 +14,12 @@
 
  <div class="container">
      <form class="form-horizontal" role="form" method="POST" th:action="@{/editreserve2}" th:object="${reservation}">
-     
-         <div class="row">
-             <div class="p-2" align="center">
-                 <h5>Edit Reservation</h5>
-             </div>
-         </div>
-         
-         <table class="table table-striped">
+
+   <div class="p-2" align="center">
+      <h5>Edit Reservation</h5>
+   </div>
+
+ <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">Name</th>
@@ -31,17 +29,29 @@
   <tbody>
     <tr>
       <th scope="row">Reservation ID:</th>
-      	<td>          
-      		<input type="text" th:field="*{id}" readonly="readonly" />
+      	<td th:text="*{id}">          
+      	<!-- <input type="text" th:field="*{id}" readonly="readonly" /> -->	
+      		
       	</td>
     </tr>
     <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
+      <th scope="row">Check In:</th>
+      <td th:text="*{checkIn}">Check IN</td>
     </tr>
     <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
+      <th scope="row">Check Out:</th>
+      <td th:text="*{checkOut}">Check OUT</td>
+   </tr>
+   <tr>
+      <th scope="row">Guest Name:</th>
+      <td th:text="*{user.getFirst_name()} + ' ' + *{user.getLast_name()}">Full Name</td>
+   </tr>
+       <tr>
+      <th scope="row">Reservation ID:</th>
+      	<td th:text="*{id}">          
+      	 <input type="text" th:field="*{id}" readonly="readonly" />
+      		
+      	</td>
     </tr>
   </tbody>
 </table>
