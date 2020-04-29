@@ -114,12 +114,12 @@ public class ReservationController {
      }
      
      NoteReservation res = noteReservationRepository.findById(bookingForm.getReservationId()).get();
-     res.setServicesCost(totalCostServices);
      
+     res.setServicesCost(totalCostServices);
      noteReservationRepository.save(res);
      
-     res.getServices().addAll(selectedServices);
-	 
+     res.setServices(selectedServices);
+     //res.getServices().addAll(selectedServices);
 	 noteReservationRepository.save(res);
 
 	mav.addObject("reservation", res);
