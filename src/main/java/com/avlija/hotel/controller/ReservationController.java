@@ -1,5 +1,6 @@
 package com.avlija.hotel.controller;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -141,10 +142,12 @@ public class ReservationController {
      ModelAndView mav = new ModelAndView("user/search_by_date");
 
 	 String message = null;
-  
+
      String inputFromDate = bookingForm.getFromDate();
      String inputToDate = bookingForm.getToDate();
-
+     
+     System.out.println("TEST 1" + inputFromDate);
+     System.out.println("TEST 2" + inputToDate);
      List<Room> availableRooms = searchByDate(inputFromDate, inputToDate);
 
 	 if(availableRooms.size() == 0) {
@@ -155,7 +158,7 @@ public class ReservationController {
     	 message = "Check In date and Check Out date cannot be the same";
     	 availableRooms = new ArrayList<>();
      }
-	 
+
 	 mav.addObject("message", message);
 	 mav.addObject("availableRooms", availableRooms);
 	 mav.addObject("bookingForm", bookingForm);
@@ -222,6 +225,13 @@ public class ReservationController {
      NoteReservation reservation = noteReservationRepository.findById(id).get();
      mav.addObject("reservation", reservation);
      BookingForm bookingForm = new BookingForm();
+     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");  
+     String start = df.format(reservation.getCheckIn());
+     String end = df.format(reservation.getCheckOut());
+     System.out.println("Start " + start);
+     System.out.println("End " + end);
+     bookingForm.setFromDate(start);
+     bookingForm.setToDate(end);
      mav.addObject("bookingForm", bookingForm);
      return mav;
  }

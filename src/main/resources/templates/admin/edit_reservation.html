@@ -13,8 +13,7 @@
 <div th:include="fragments/header :: header"/></div>
 
  <div class="container">
-     <form class="form-horizontal" role="form" method="POST" th:action="@{/editreserve2}" th:object="${bookingForm}">
-
+ 
    <div class="p-2" align="center">
       <h5>Edit Reservation</h5>
    </div>
@@ -35,22 +34,18 @@
       <th scope="row">Reservation ID:</th>
       	<td th:text="*{id}"></td>
     </tr>
-    <tr>
+    <tr>    
       <th scope="row">Check In:</th>
-      <td><input type="text" th:field="*{checkIn}" th:value="${fromDate}" readonly="readonly"/></td>
+      <td><input type="text" th:field="*{checkIn}" readonly="readonly"/></td>
     </tr>
     <tr>
       <th scope="row">Check Out:</th>
-      <td><input type="text" th:field="*{checkOut}" th:value="${toDate}" readonly="readonly"/></td>
+      <td><input type="text" th:field="*{checkOut}" readonly="readonly"/></td>
    </tr>
     <tr>
       <th scope="row">Room Number:</th>
       	<td th:text="*{room.getNum()}"></td>
     </tr>
-   <tr>
-      <th scope="row"><button type="submit" class="btn btn-success">Search New Room with Same Dates</button></th>
-      <td></td>
-   </tr>
    <tr>
       <th scope="row">List of additional services used:</th>
       	<td></td>
@@ -66,7 +61,11 @@
     </tr>
   	</tbody>
 	</table>
-  </form>
+       <form class="form-horizontal" role="form" method="POST" th:action="@{/search}" th:object="${bookingForm}">
+   			<input type="text" th:field="*{fromDate}" readonly="readonly"/>
+      		<input type="text" th:field="*{toDate}" readonly="readonly"/>
+      	<button type="submit" class="btn btn-success">Search New Room with Same Dates</button>
+   	</form>
  </div>
  
   <div th:include="fragments/footer :: footer"/></div>
