@@ -51,7 +51,10 @@ public class NoteReservation implements Serializable{
                     @JoinColumn(name = "service_id", referencedColumnName = "service_id",
                             nullable = false, updatable = false)})
     private Set<AddService> services = new HashSet<>();
-
+    
+    @OneToOne(mappedBy = "noteReservation", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Invoice invoice;
     
     public NoteReservation() {
     }
@@ -221,6 +224,20 @@ public class NoteReservation implements Serializable{
 	 */
 	public void setServices(Set<AddService> services) {
 		this.services = services;
+	}
+
+	/**
+	 * @return the invoice
+	 */
+	public Invoice getInvoice() {
+		return invoice;
+	}
+
+	/**
+	 * @param invoice the invoice to set
+	 */
+	public void setInvoice(Invoice invoice) {
+		this.invoice = invoice;
 	}
 
 	@Override

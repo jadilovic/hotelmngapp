@@ -1,0 +1,91 @@
+<!doctype html>
+<html 	lang="en"
+ 		xmlns:layout="http://www.w3.org/1999/xhtml"
+	  	xmlns:th="http://www.thymeleaf.org">
+<head>
+ 	<title>Available Rooms by Date</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+
+<div th:include="fragments/header :: header"/></div>
+
+ <div class="p-2" align="center">
+   <h5>Available Rooms by Date</h5>
+ </div>
+
+<main class="container">
+       <div th:if="${message}" class="p-2 bg-danger text-white" align="center" >
+         <b th:text="${message}"></b>
+       </div>
+      
+      <div th:if="${availableRooms.size() > 0}">
+       
+       <div class="p-2" align="center">
+   			<h5>List of Available Rooms</h5>
+ 		</div>
+ 		
+        <div class="container table-responsive" align="center">
+    
+    	<table border="1" cellpadding="2" class="table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Room ID</th>
+                <th scope="col">Room Number</th>
+                <th scope="col">Room Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr scope="row" th:each="room : ${availableRooms}">
+                <td th:text="${room.id}">Room ID</td>
+                <td th:text="${room.num}">Room Number</td>
+                <td th:text="${room.roomType.getType()}">Room Type</td>
+                <td>
+                	<form class="form-horizontal" role="form" th:action="@{/editreserve2}" th:object="${bookingForm}" method="post">
+	    				<input class="form-control" type="text" th:value="*{reservationId}" id="reservationId" name="reservationId" />
+	    				<input class="form-control" type="text" th:value="${room.num}" id="roomNum" name="roomNum" />
+	    				<input class="form-control" type="text" th:value="*{fromDate}" id="fromDate" name="fromDate" />
+	    				<input class="form-control" type="text" th:value="*{toDate}" id="toDate" name="toDate" />
+	    				<button type="submit" class="btn btn-lg btn-warning">Reserve this Room</button>
+					</form>
+                </td>
+               </tr>
+        	  </tbody>
+    		</table>
+  		</div>
+      </div>
+	
+</main>
+
+ <div th:insert="fragments/footer :: footer"/></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    $('#datepicker1').datepicker({
+        weekStart: 1,
+        daysOfWeekHighlighted: "6,0",
+        autoclose: true,
+        todayHighlight: true,
+    });
+    $('#datepicker1').datepicker("setDate", new Date());
+    
+    $('#datepicker2').datepicker({
+        weekStart: 1,
+        daysOfWeekHighlighted: "6,0",
+        autoclose: true,
+        todayHighlight: true,
+    });
+    $('#datepicker2').datepicker("setDate", new Date());
+</script>
+
+</body>
+</html>
+

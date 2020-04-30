@@ -29,6 +29,7 @@ import com.avlija.hotel.entity.RoomSearch;
 import com.avlija.hotel.form.BookingForm;
 import com.avlija.hotel.model.AddService;
 import com.avlija.hotel.model.Date;
+import com.avlija.hotel.model.Invoice;
 import com.avlija.hotel.model.LocalDateAttributeConverter;
 import com.avlija.hotel.model.NoteReservation;
 import com.avlija.hotel.model.Reservation;
@@ -36,6 +37,7 @@ import com.avlija.hotel.model.Room;
 import com.avlija.hotel.model.User;
 import com.avlija.hotel.repository.AddServiceRepository;
 import com.avlija.hotel.repository.DateRepository;
+import com.avlija.hotel.repository.InvoiceRepository;
 import com.avlija.hotel.repository.NoteReservationRepository;
 import com.avlija.hotel.repository.ReservationRepository;
 import com.avlija.hotel.repository.RoomRepository;
@@ -43,8 +45,6 @@ import com.avlija.hotel.repository.UserRepository;
 import com.avlija.hotel.service.ReservationServiceImpl;
 import com.avlija.hotel.service.UserService;
 import com.avlija.hotel.service.UserServiceImpl;
-
-import net.bytebuddy.asm.Advice.Local;
 
 @Controller
 public class ReservationController {
@@ -66,6 +66,9 @@ public class ReservationController {
  
  	@Autowired
  	private UserServiceImpl userServiceImpl;
+ 	
+ 	@Autowired
+ 	private InvoiceRepository invoiceRepository;
  
  @RequestMapping(value= {"/allreservations"}, method=RequestMethod.GET)
  public ModelAndView showAllReservations() {
@@ -232,6 +235,7 @@ public class ReservationController {
      System.out.println("End " + end);
      bookingForm.setFromDate(start);
      bookingForm.setToDate(end);
+     bookingForm.setReservationId(id);
      mav.addObject("bookingForm", bookingForm);
      return mav;
  }
@@ -239,10 +243,62 @@ public class ReservationController {
  @RequestMapping(value = "/editreserve2")
  public ModelAndView editRes2(@ModelAttribute("command") BookingForm bookingForm) throws ParseException {
      ModelAndView mav = new ModelAndView("user/reserve_confirmation");
-     int userId = bookingForm.getUserId();
-     User user = userServiceImpl.findUserById(userId);
-     int roomNum = bookingForm.getRoomNum();
-     Room room = roomRepository.findByNum(roomNum);
+     NoteReservation reservation = noteReservationRepository.findById(bookingForm.getReservationId()).get();
+     Room room = roomRepository.findByNum(bookingForm.getRoomNum());
+     reservation.setRoom(room);
+     noteReservationRepository.save(reservation);
+
+	 mav.addObject("reservation", reservation);
+     return mav;
+ }
+ 
+ @RequestMapping(value = "/editsearch", method = RequestMethod.POST)
+ public ModelAndView searchNewRoom(@ModelAttribute("command") BookingForm bookingForm) throws ParseException {
+     ModelAndView mav = new ModelAndView("user/search_new_room");
+
+	 String message = null;
+
+     String inputFromDate = bookingForm.getFromDate();
+     String inputToDate = bookingForm.getToDate();
+     
+     System.out.println("TEST 1" + inputFromDate);
+     System.out.println("TEST 2" + inputToDate);
+     List<Room> availableRooms = searchByDate(inputFromDate, inputToDate);
+
+	 if(availableRooms.size() == 0) {
+		 message = "There are no available rooms on the selected date";
+	 }
+	 
+     if(inputFromDate.equals(inputToDate)) {
+    	 message = "Check In date and Check Out date cannot be the same";
+    	 availableRooms = new ArrayList<>();
+     }
+
+	 mav.addObject("message", message);
+	 mav.addObject("availableRooms", availableRooms);
+	 mav.addObject("bookingForm", bookingForm);
+     return mav;    
+ }
+ 
+ @RequestMapping(value = "/checkout/{id}")
+ public ModelAndView checkOut(@PathVariable(name = "id") Long id) {
+     ModelAndView mav = new ModelAndView("admin/invoice_confirmation");
+     NoteReservation reservation = noteReservationRepository.findById(id).get();
+
+     if(reservation.getInvoice() != null) {
+    	 String message = "Invoice was already issued";
+    	 mav.addObject("message", message);
+         mav.addObject("reservation", reservation);
+    	 return mav;
+     }
+     double roomCost = reservation.getTotalCost();
+     double servicesCost = reservation.getServicesCost();
+     double totalCost = roomCost + servicesCost;
+     Invoice invoice = new Invoice(new java.util.Date(), totalCost);
+     invoice.setNoteReservation(reservation);
+     reservation.setInvoice(invoice);
+     noteReservationRepository.save(reservation);
+     mav.addObject("reservation", reservation);
      return mav;
  }
  

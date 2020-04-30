@@ -46,6 +46,17 @@
       <th scope="row">Room Number:</th>
       	<td th:text="*{room.getNum()}"></td>
     </tr>
+    <tr>
+   	<th scope="row">
+    	<form class="form-horizontal" role="form" method="POST" th:action="@{/editsearch}" th:object="${bookingForm}">
+   			<input type="hidden" th:field="*{reservationId}" readonly="readonly"/>
+   			<input type="hidden" th:field="*{fromDate}" readonly="readonly"/>
+      		<input type="hidden" th:field="*{toDate}" readonly="readonly"/>
+      		<button type="submit" class="btn btn-success">Search New Room with Same Dates</button>
+   		</form>
+    		</th>
+      	<td></td>
+    </tr>
    <tr>
       <th scope="row">List of additional services used:</th>
       	<td></td>
@@ -61,11 +72,6 @@
     </tr>
   	</tbody>
 	</table>
-       <form class="form-horizontal" role="form" method="POST" th:action="@{/search}" th:object="${bookingForm}">
-   			<input type="text" th:field="*{fromDate}" readonly="readonly"/>
-      		<input type="text" th:field="*{toDate}" readonly="readonly"/>
-      	<button type="submit" class="btn btn-success">Search New Room with Same Dates</button>
-   	</form>
  </div>
  
   <div th:include="fragments/footer :: footer"/></div>
