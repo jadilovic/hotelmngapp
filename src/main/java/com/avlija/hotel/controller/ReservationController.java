@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.avlija.hotel.entity.RoomSearch;
 import com.avlija.hotel.form.BookingForm;
 import com.avlija.hotel.model.AddService;
 import com.avlija.hotel.model.Date;
@@ -227,6 +226,12 @@ public class ReservationController {
      ModelAndView mav = new ModelAndView("admin/edit_reservation");
      NoteReservation reservation = noteReservationRepository.findById(id).get();
      mav.addObject("reservation", reservation);
+     if(reservation.getInvoice() != null) {
+    	 String message = "Reservation cannot be changed since the Invoice below has been alrady issued.";
+    	 mav.addObject("message", message);
+    	 mav.setViewName("admin/invoice_confirmation");
+    	 return mav;
+     }
      BookingForm bookingForm = new BookingForm();
      DateFormat df = new SimpleDateFormat("dd/MM/yyyy");  
      String start = df.format(reservation.getCheckIn());
@@ -291,6 +296,7 @@ public class ReservationController {
          mav.addObject("reservation", reservation);
     	 return mav;
      }
+     reservation.getUser().setActive(0);
      double roomCost = reservation.getTotalCost();
      double servicesCost = reservation.getServicesCost();
      double totalCost = roomCost + servicesCost;
