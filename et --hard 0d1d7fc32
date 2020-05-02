@@ -1,0 +1,185 @@
+[33mcommit 5880b5dbc25a02245997d930f2d913e8f6fc72e9[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Sat May 2 09:47:18 2020 +0200
+
+    user2
+
+[33mcommit aa23323148b8a87649d4ccded2125f6c83f73216[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Fri May 1 22:26:54 2020 +0200
+
+    user
+
+[33mcommit 2d4c3db5fffebc764078f64b266469705ac2d7f0[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Thu Apr 30 21:27:40 2020 +0200
+
+    invoice
+
+[33mcommit 139916892a012c8932c551aa30a12df5557b6226[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Thu Apr 30 09:27:36 2020 +0200
+
+    reservations
+
+[33mcommit 604771e28a8c07d1e8dfef3125a49cc618365265[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Wed Apr 29 09:11:51 2020 +0200
+
+    services
+
+[33mcommit 859cb042e6b567af75cf4e02e1b7d78f259cda39[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Tue Apr 28 23:50:36 2020 +0200
+
+    add services
+
+[33mcommit 9374fce3f50a625d9b2d3e21f07010dcc5653039[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Tue Apr 28 09:58:36 2020 +0200
+
+    edit reservation
+
+[33mcommit e850edb7a5a62b880dfdb3d5a9afbd067ca6a9ba[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Sun Apr 26 19:47:32 2020 +0200
+
+    add services reservation
+
+[33mcommit 89a3edb7a83b11b8cc413931be6826bedc6ac8d2[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Sat Apr 25 23:51:39 2020 +0200
+
+    add services
+
+[33mcommit 921947b2aa302e2fdc20e628be6815e7e4d5a803[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Sat Apr 25 17:27:34 2020 +0200
+
+    reserve 2
+
+[33mcommit 5a28adedb76d8872f8a5b8adddd9d91dca731b47[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Fri Apr 24 09:27:26 2020 +0200
+
+    search and reserve
+
+[33mcommit 9a2639daf0f1b89093d48170faf43159dc5a3d67[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Thu Apr 23 08:44:39 2020 +0200
+
+    reserve room
+
+[33mcommit 3ecfd3670861220665964dcfcce9399577add582[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Wed Apr 22 23:19:38 2020 +0200
+
+    reservation
+
+[33mcommit 4fe7a35aa26d46b83de28eecb0d4b3597d7adf18[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Wed Apr 22 15:36:43 2020 +0200
+
+    datepick
+
+[33mcommit 4539633c412ace15306e9f2094f000d8e6530f40[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Tue Apr 21 22:50:57 2020 +0200
+
+    rooms list
+
+[33mcommit baef217dba73401008d0e555a694389dc84f48e9[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Tue Apr 21 14:09:06 2020 +0200
+
+    profile page
+
+[33mcommit c82dc93de63451bfb12b412a4afb1167e75df299[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Mon Apr 20 07:55:28 2020 +0200
+
+    admin page
+
+[33mcommit 50eafbb5fe950271b7611604f8b5c98acec871c8[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Sat Apr 18 21:35:49 2020 +0200
+
+    search
+
+[33mcommit b7e18ea6cb920517166ae9066c8c2987113fdd1f[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Sat Apr 18 00:17:46 2020 +0200
+
+    reservation
+
+[33mcommit 96a065931cf2aeaf64a30edc580a8f10bbb4f3d1[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Fri Apr 17 07:44:44 2020 +0200
+
+    date correction
+
+[33mcommit c323a96fb4ab6fdb5bb71c2510ad5abba7bd98ee[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Wed Apr 15 09:52:11 2020 +0200
+
+    search dates
+
+[33mcommit 0b778921bdfb3e952da8ca8a8a0c067501c08eb4[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Mon Apr 13 22:14:24 2020 +0200
+
+    service
+
+[33mcommit 6fa2d929804bf8abd77acb96e45ebca198619ed0[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Sun Apr 12 22:26:06 2020 +0200
+
+    services
+
+[33mcommit 0e722e8eeec3f321183a5754b7c67978bf5d1828[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Sun Apr 12 10:00:04 2020 +0200
+
+    reservations
+
+[33mcommit a269e79273de966892ac53b7e47b522d5d44e2b2[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Sun Apr 12 07:36:11 2020 +0200
+
+    booking
+
+[33mcommit dab29d323db75209a7c61634cc0877bbfbdfcaa6[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Sat Apr 11 23:40:15 2020 +0200
+
+    new pages
+
+[33mcommit be52799ac45af98efbf7596d792604be1e32736c[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Sun Apr 5 09:41:51 2020 +0200
+
+    new start
+
+[33mcommit d4713c123b314e15e955228587a0153bd311b858[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Sat Apr 4 08:39:53 2020 +0200
+
+    home page
+
+[33mcommit 1cbf09f8ad8f210f1687a999d0176dd534e2cc00[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Thu Apr 2 16:13:53 2020 +0200
+
+    test classes
+
+[33mcommit 5a0d485a01ad080d7a87d6be11101e03f26813af[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Wed Apr 1 08:11:52 2020 +0200
+
+    login page
+
+[33mcommit a7efb772858102e9afaa93cf01064caef9c8514b[m
+Author: jadilovic <adilovic79@yahoo.com>
+Date:   Tue Mar 31 09:04:33 2020 +0200
+
+    first commit
