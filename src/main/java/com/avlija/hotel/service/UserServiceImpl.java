@@ -45,9 +45,9 @@ public List<User> finaAllUsers() {
 }
 
 @Override
-public User findUserById(int id) {
+public User findUserById(long id) {
 	// TODO Auto-generated method stub
-	return userRepository.findById((long) id).get();
+	return userRepository.findById(id).get();
 }
 
 @Override

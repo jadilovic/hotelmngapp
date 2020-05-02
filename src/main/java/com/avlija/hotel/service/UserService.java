@@ -12,7 +12,7 @@ public interface UserService {
  
  public List<User> finaAllUsers();
  
- public User findUserById(int id);
+ public User findUserById(long id);
  
  public List<User> findAllActiveUsers(int active);
  

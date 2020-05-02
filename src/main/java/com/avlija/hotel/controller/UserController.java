@@ -1,5 +1,6 @@
 package com.avlija.hotel.controller;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -25,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.avlija.hotel.form.BookingForm;
 import com.avlija.hotel.model.Date;
 import com.avlija.hotel.model.LocalDateAttributeConverter;
+import com.avlija.hotel.model.NoteReservation;
 import com.avlija.hotel.model.Reservation;
 import com.avlija.hotel.model.Role;
 import com.avlija.hotel.model.Room;
@@ -127,9 +129,23 @@ public class UserController {
   model.addObject("listUsers", listUsers);
   User user = new User();
   model.addObject("user", user);
-  model.setViewName("home/list_all_users");
+  model.setViewName("admin/list_all_users");
   
   return model;
+ }
+ 
+ @RequestMapping(value = "/resinfo/{id}")
+ public ModelAndView editRes1(@PathVariable(name = "id") Long id) {
+     ModelAndView mav = new ModelAndView("home/list_all_reservations");
+     User user = userService.findUserById(id);
+     Set<NoteReservation> listReservations = user.getNoteReservations();
+     mav.addObject("listReservations", listReservations);
+     if(listReservations.size() == 0) {
+    	 String message = "There are no reservations for user " + user.getFirst_name();
+    	 mav.addObject("message", message);
+    	 return mav;
+     }
+     return mav;
  }
  
  
