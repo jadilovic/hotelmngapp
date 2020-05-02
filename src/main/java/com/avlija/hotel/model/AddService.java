@@ -1,17 +1,8 @@
 package com.avlija.hotel.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,9 +18,6 @@ public class AddService {
  
  @Column(name="service_cost")
  private double cost;
- 
- @ManyToMany(mappedBy = "services", fetch = FetchType.LAZY)
- private Set<Reservation> reservations = new HashSet<>();
  
  public AddService() {
 	 
@@ -83,20 +71,6 @@ public void setCost(double cost) {
 	this.cost = cost;
 }
 
-/**
- * @return the reservations
- */
-public Set<Reservation> getReservations() {
-	return reservations;
-}
-
-/**
- * @param reservations the reservations to set
- */
-public void setReservations(Set<Reservation> reservations) {
-	this.reservations = reservations;
-}
- 
 @Override
 public String toString() {
 	return name + ", Cost: " + cost + "KM";

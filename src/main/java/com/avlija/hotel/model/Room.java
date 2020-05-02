@@ -1,7 +1,6 @@
 package com.avlija.hotel.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,9 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 
 @Entity
@@ -44,32 +41,11 @@ public class Room  implements Serializable {
  @JoinColumn(name ="FK_RoomTypeId")
  private RoomType roomType;
  
- 
- //@OneToOne(mappedBy = "room", fetch = FetchType.LAZY,
-//         cascade = CascadeType.ALL)
-// private Reservation reservation;
- 
- @OneToMany(mappedBy = "room", fetch = FetchType.LAZY,
-         cascade = CascadeType.ALL)
- private Set<Date> dates;
- 
+
  @OneToMany(mappedBy = "room", fetch = FetchType.LAZY,
          cascade = CascadeType.ALL)
  private Set<NoteReservation> noteReservation;
 
-/**
- * @return the dates
- */
-public Set<Date> getDates() {
-	return dates;
-}
-
-/**
- * @param dates the dates to set
- */
-public void setDates(Set<Date> dates) {
-	this.dates = dates;
-}
 
 public Room() {
 	 

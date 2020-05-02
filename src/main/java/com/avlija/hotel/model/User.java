@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -58,42 +57,35 @@ public class User {
  			joinColumns=@JoinColumn(name="user_id"),
  			inverseJoinColumns=@JoinColumn(name="role_id"))
  private Set<Role> roles;
- 
- //@OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
- //        cascade = CascadeType.ALL)
-// private Set<Reservation> reservations;
- 
+
  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
          cascade = CascadeType.ALL)
  private Set<NoteReservation> noteReservations;
  
-// @OneToOne(mappedBy = "user", fetch = FetchType.LAZY,
- //        cascade = CascadeType.ALL)
-// private Date date;
+ public User() {
+	 
+ }
  
- 
- 
- /**
+ public User(String email, String password, String first_name, String last_name, String gender, String id_card_num,
+		int age, int active, Set<Role> roles) {
+	this.email = email;
+	this.password = password;
+	this.first_name = first_name;
+	this.last_name = last_name;
+	this.gender = gender;
+	this.id_card_num = id_card_num;
+	this.age = age;
+	this.active = active;
+	this.roles = roles;
+}
+
+/**
  * @return the gender
  */
 public String getGender() {
 	return gender;
 }
 
-/**
- * @return the reservations
- 
-public Set<Reservation> getReservations() {
-	return reservations;
-}
-
-
- * @param reservations the reservations to set
-
-public void setReservations(Set<Reservation> reservations) {
-	this.reservations = reservations;
-}
- */
 /**
  * @param gender the gender to set
  */

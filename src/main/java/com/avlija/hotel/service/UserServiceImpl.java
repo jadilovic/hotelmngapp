@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 @Override
 public List<User> finaAllUsers() {
 	
-	return userRepository.findAll();
+	return (List<User>) userRepository.findAll();
 }
 
 @Override
@@ -54,6 +54,11 @@ public User findUserById(long id) {
 public List<User> findAllActiveUsers(int active) {
 
 	return userRepository.findByActive(active);
+}
+
+@Override
+public void updateUser(User user) {
+	  userRepository.save(user);
 }
 
 }

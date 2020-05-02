@@ -4,21 +4,15 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.validation.Valid;
 
-import org.aspectj.weaver.reflect.ReflectionBasedResolvedMemberImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,22 +21,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.avlija.hotel.form.BookingForm;
 import com.avlija.hotel.model.AddService;
-import com.avlija.hotel.model.Date;
 import com.avlija.hotel.model.Invoice;
 import com.avlija.hotel.model.LocalDateAttributeConverter;
 import com.avlija.hotel.model.NoteReservation;
-import com.avlija.hotel.model.Reservation;
 import com.avlija.hotel.model.Room;
 import com.avlija.hotel.model.User;
 import com.avlija.hotel.repository.AddServiceRepository;
-import com.avlija.hotel.repository.DateRepository;
-import com.avlija.hotel.repository.InvoiceRepository;
 import com.avlija.hotel.repository.NoteReservationRepository;
-import com.avlija.hotel.repository.ReservationRepository;
 import com.avlija.hotel.repository.RoomRepository;
-import com.avlija.hotel.repository.UserRepository;
-import com.avlija.hotel.service.ReservationServiceImpl;
-import com.avlija.hotel.service.UserService;
 import com.avlija.hotel.service.UserServiceImpl;
 
 @Controller
@@ -53,22 +39,14 @@ public class ReservationController {
  
  @Autowired
  private RoomRepository roomRepository;
- 
- @Autowired
- private ReservationServiceImpl reservationImpl;
- 
+
  @Autowired
  private NoteReservationRepository noteReservationRepository;
- 
- @Autowired
- private DateRepository dateRepository;
- 
+
  	@Autowired
  	private UserServiceImpl userServiceImpl;
  	
- 	@Autowired
- 	private InvoiceRepository invoiceRepository;
- 
+
  @RequestMapping(value= {"/allreservations"}, method=RequestMethod.GET)
  public ModelAndView showAllReservations() {
   ModelAndView model = new ModelAndView();
