@@ -18,16 +18,42 @@
   <h5>Hi <span th:utext="${userName}"></span>, this is the Admin Page.</h5>
   </div>
   
-   <a th:href="@{/signup}" class="btn-primary btn-lg btn-block" role="button" aria-pressed="true">Sign Up</a>
-   <p></p>
-     <a th:href="@{/allreservations}" class="btn-warning btn-lg btn-block" role="button" aria-pressed="true">List All Reservations</a>
-             <p></p>
+ <table class="table table-borderless">
+ <tbody>
+   <tr>
+  	<td scope="col">
+  	 <a th:href="@{/signup}" class="btn-primary btn-lg btn-block" role="button" aria-pressed="true">Sign Up</a>
+  	</td>
+  	<td scope="col">
+  	 <a th:href="@{/allreservations}" class="btn-warning btn-lg btn-block" role="button" aria-pressed="true">List All Reservations</a>
+  	</td>
+  	</tr>
+  	<tr>
+  	<td scope="col">
   <a th:href="@{/allusers}" class="btn-success btn-lg btn-block" role="button" aria-pressed="true">List All Users</a>
-       <p></p>
+  	</td>
+  	<td scope="col">
+  <a th:href="@{/finduser}" class="btn-success btn-lg btn-block" role="button" aria-pressed="true">Find Users</a>
+  	</td>
+  	</tr>
+  	<tr>
+  	<td scope="col">
   <a th:href="@{/createroom}" class="btn-info btn-lg btn-block" role="button" aria-pressed="true">Create Room</a>
-         <p></p>
-  <a th:href="@{/logout}" class="btn-secondary btn-lg btn-block" role="button" aria-pressed="true">Sign out</a>
-     <p></p>
+  	</td>
+  	<td scope="col">
+  <a th:href="@{/loggedUsers}" class="btn-secondary btn-lg btn-block" role="button" aria-pressed="true">Logged Users</a>
+  	</td>
+  	</tr>
+  	  	<tr>
+  	<td scope="col">
+  <a th:href="@{/createroom}" class="btn-info btn-lg btn-block" role="button" aria-pressed="true">Create Room</a>
+  	</td>
+  	<td scope="col">
+  <a th:href="@{/loggedUsers}" class="btn-secondary btn-lg btn-block" role="button" aria-pressed="true">Logged Users</a>
+  	</td>
+  	</tr>
+ </tbody>
+  </table>
  </div>
  
   <div th:include="fragments/footer :: footer"/></div>

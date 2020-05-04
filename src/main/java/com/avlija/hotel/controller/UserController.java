@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.avlija.hotel.form.BookingForm;
+import com.avlija.hotel.model.Logins;
 import com.avlija.hotel.model.NoteReservation;
 import com.avlija.hotel.model.Role;
 import com.avlija.hotel.model.Room;
 import com.avlija.hotel.model.User;
+import com.avlija.hotel.repository.LoginsRepository;
 import com.avlija.hotel.repository.RoomRepository;
 import com.avlija.hotel.service.UserService;
 
@@ -31,7 +33,11 @@ public class UserController {
  
  @Autowired
  private RoomRepository roomRepository;
-
+ 
+ @Autowired
+ private LoginsRepository loginsRepository;
+ 
+ 
  @RequestMapping(value= {"/", "/login"}, method=RequestMethod.GET)
  public ModelAndView login() {
   ModelAndView model = new ModelAndView();
@@ -39,6 +45,7 @@ public class UserController {
   model.setViewName("user/login");
   return model;
  }
+
  
  @RequestMapping(value= {"/signup"}, method=RequestMethod.GET)
  public ModelAndView signup() {
@@ -69,12 +76,24 @@ public class UserController {
   return model;
  }
  
+ @RequestMapping(value= {"/loggedUsers"}, method=RequestMethod.GET)
+ public ModelAndView loggedUsers() {
+  ModelAndView model = new ModelAndView();
+  System.out.println("Number of logins entities " + loginsRepository.count());
+  List<Logins> users = (List<Logins>) loginsRepository.findAll();
+  model.addObject("users", users);
+  model.setViewName("admin/users");
+  
+  return model;
+ }
+ 
  @RequestMapping(value= {"/home/home"}, method=RequestMethod.GET)
  public ModelAndView home() {
   ModelAndView model = new ModelAndView();
   Authentication auth = SecurityContextHolder.getContext().getAuthentication();
   User user = userService.findUserByEmail(auth.getName());
   long userId = user.getId();
+
   model.addObject("userName", user.getFirst_name() + " " + user.getLast_name());
   model.addObject("userId", userId);
   model.setViewName("home/home");
@@ -171,7 +190,6 @@ public class UserController {
    model.addObject("room", new Room());
    model.setViewName("admin/create_room");
   }
-  
   return model;
  }
  
@@ -187,13 +205,29 @@ public class UserController {
   return model;
  }
  
- @RequestMapping("/book/{id}")
- public ModelAndView bookRoom(@PathVariable(name = "id") Integer id) {
-     ModelAndView mav = new ModelAndView("user/room_booking");
-     BookingForm bookingForm = new BookingForm();
-     bookingForm.setUserId(id);
-     mav.addObject("bookingForm", bookingForm);
+ @RequestMapping("/finduser")
+ public ModelAndView bookRoom() {
+     ModelAndView mav = new ModelAndView("admin/find_user");
+     User user = new User();
+     mav.addObject("user", user);
      return mav;
+ }
+ 
+ @RequestMapping(value= {"/finduser"}, method=RequestMethod.POST)
+ public ModelAndView findUser(@Valid User user, BindingResult bindingResult) {
+  ModelAndView model = new ModelAndView();
+  User userExists = userService.findUserByEmail(user.getEmail());
+  if(userExists == null) {
+   bindingResult.rejectValue("email", "error.user", "This user email does not exist!");
+  }
+  if(bindingResult.hasErrors()) {
+   model.setViewName("admin/find_user");
+  } else {
+   model.addObject("msg", "Room has been registered successfully!");
+   model.addObject("userProfile", userExists);
+   model.setViewName("user/profile_page");
+  }
+  return model;
  }
 
 @RequestMapping(value= {"/access_denied"}, method=RequestMethod.GET)
