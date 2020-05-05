@@ -13,71 +13,65 @@
 <div th:include="fragments/header :: header"/></div>
 
  <div class="container">
+ 
+ <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Find by First Name</th>
+      <td>
+         <form class="form-horizontal" role="form" method="POST" th:action="@{/finduser}" th:object="${user}">
+      	 <input type="text" th:field="*{first_name}" class="form-control" id="first_name"
+                        placeholder="First Name" required autofocus>
+         <button type="submit" class="btn btn-secondary">Find User by First Name</button>
+      	</form>
+      </td>
+    </tr>
+  </tbody>
+</table>
+ 
+ 
+   <div class="col-md-3">
      <form class="form-horizontal" role="form" method="POST" th:action="@{/finduser}" th:object="${user}">
-      <div class="row">
-             <div class="col-md-3"></div>
-             <div class="col-md-6">
-              <div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}">
-     </div>
-             </div>
-         </div>
-         <div class="row">
-             <div class="col-md-3"></div>
-             <div class="p-2" align="center">
-                 <h5>Find by First Name</h5>
-                 <hr>
-             </div>
-         </div>
          <!-- FIRST NAME -->
          <div class="row">
              <div class="col-md-3 field-label-responsive">
-                 <label for="name">First Name</label>
+                 <label for="name">Find by First Name</label>
              </div>
              <div class="col-md-6">
-                 <div class="form-group">
-                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                         <div class="input-group-addon" style="width: 2.6rem"></div>
-                         <input type="text" th:field="*{first_name}" class="form-control" id="first_name"
-                                placeholder="First Name" required autofocus>
-                     </div>
+               <div class="form-group">
+                 <div class="input-group-addon" style="width: 2.6rem"></div>
+                   <input type="text" th:field="*{first_name}" class="form-control" id="first_name"
+                        placeholder="First Name" required autofocus>
                  </div>
              </div>
          </div>
          <div class="row">
              <div class="col-md-3"></div>
              <div class="col-md-6">
-                <button type="submit" class="btn btn-success">Find User</button>
+                <button type="submit" class="btn btn-secondary">Find User by First Name</button>
              </div>
          </div>
      </form>
-         
-         
-     <form class="form-horizontal" role="form" method="POST" th:action="@{/finduser}" th:object="${user}">
-      <div class="row">
-             <div class="col-md-3"></div>
-             <div class="col-md-6">
-        <div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}"></div>
-             </div>
-         </div>
-         <div class="row">
-             <div class="col-md-3"></div>
-             <div class="p-2" align="center">
-                 <h5>Find by Email</h5>
-                 <hr>
-             </div>
-         </div>         
+   </div>
+
+   <div class="col-md-3">  
+     <form class="form-horizontal" role="form" method="POST" th:action="@{/finduser}" th:object="${user}">    
          <!-- E-MAIL  -->
          <div class="row">
              <div class="col-md-3 field-label-responsive">
-                 <label for="email">Email</label>
+                 <label for="email">Find by Email</label>
              </div>
              <div class="col-md-6">
                  <div class="form-group">
-                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                          <div class="input-group-addon" style="width: 2.6rem"></div>
                          <input type="text" th:field="*{email}" class="form-control" id="email"
                                 placeholder="user@sample.com" required autofocus>
-                     </div>
                  </div>
              </div>
              <div class="col-md-3">
@@ -90,10 +84,11 @@
          <div class="row">
              <div class="col-md-3"></div>
              <div class="col-md-6">
-                <button type="submit" class="btn btn-success">Find User</button>
+                <button type="submit" class="btn btn-primary">Find User by Email</button>
              </div>
          </div>
      </form>
+   </div>
  </div>
  
   <div th:include="fragments/footer :: footer"/></div>

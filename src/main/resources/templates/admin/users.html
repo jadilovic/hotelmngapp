@@ -2,17 +2,56 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
  xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Logged Users</title>
+ <title>Logged In Users</title>
+ <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+ <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
 </head>
 <body>
 
-    <p><b th:if="${users}" th:text="${users}" th:class="${'alert ' + alertClass}"></b></p>
-    
-    <h2>Currently logged in users</h2>
-    <div th:each="user : ${users}">
-        <p th:text="${user}">user</p>      
-    </div>
+<div th:replace="fragments/header :: header"/></div>
 
+  <div class="container table-responsive" align="center">
+  
+  <div th:if="${message}" class="p-2" align="center">
+      <h5 th:text="${message}" th:class="${'alert ' + alertClass}"></h5>
+  </div>
+    
+    <div th:unless="${message}">
+     	<div class="p-2" align="center">
+   			<h5>Currently logged in users</h5>
+ 		</div>
+ 		
+ 		<div class="p-2" align="center">
+ 		   <a href="#" class="btn btn-danger btn-block" role="button" aria-pressed="true">Log Out All Users</a>
+ 		</div>
+ 		
+ <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">User Email</th>
+      <th scope="col">Time of Login</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="user, iStat : ${users}">
+      <th scope="row" th:text="${iStat.count}">Count</th>
+      <td th:text="${user.username}">User Email</td>
+      <td th:text="${user.lastUsed}">Time of login</td>
+      <td>
+      	<a href="#" class="btn btn-primary active" role="button" aria-pressed="true">Log Out</a>
+	  </td>
+    </tr>
+  </tbody>
+</table>
+ </div>
+
+</div>
+    
+ <div th:replace="fragments/footer :: footer"/></div>
+ 
 </body>
 </html>

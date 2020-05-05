@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.avlija.hotel.form.BookingForm;
 import com.avlija.hotel.model.Logins;
 import com.avlija.hotel.model.NoteReservation;
 import com.avlija.hotel.model.Role;
@@ -81,6 +80,10 @@ public class UserController {
   ModelAndView model = new ModelAndView();
   System.out.println("Number of logins entities " + loginsRepository.count());
   List<Logins> users = (List<Logins>) loginsRepository.findAll();
+  if(users.size() == 0) {
+	  String message = "No users are logged in";
+	  model.addObject("message", message);
+  }
   model.addObject("users", users);
   model.setViewName("admin/users");
   

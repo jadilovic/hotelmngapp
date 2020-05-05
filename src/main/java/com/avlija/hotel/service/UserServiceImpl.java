@@ -8,6 +8,7 @@ import com.avlija.hotel.model.Role;
 import com.avlija.hotel.model.User;
 import com.avlija.hotel.repository.RoleRespository;
 import com.avlija.hotel.repository.UserRepository;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
