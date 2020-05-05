@@ -22,43 +22,36 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
+  <!-- FIRST NAME  -->   
+    <tr>         
       <th scope="row">Find by First Name</th>
       <td>
-         <form class="form-horizontal" role="form" method="POST" th:action="@{/finduser}" th:object="${user}">
+     	<form class="form-horizontal" role="form" method="POST" th:action="@{/finduser}" th:object="${user}">
       	 <input type="text" th:field="*{first_name}" class="form-control" id="first_name"
                         placeholder="First Name" required autofocus>
-         <button type="submit" class="btn btn-secondary">Find User by First Name</button>
-      	</form>
+          <div class="p-2">
+             <button type="submit" class="btn btn-secondary">Find User by First Name</button>
+          </div>
+       </form>
       </td>
+      <td></td>
     </tr>
+  <!-- EMAIL  -->     
+    <tr>         
+      <th scope="row">Find by Email</th>
+      <td>
+     	<form class="form-horizontal" role="form" method="POST" th:action="@{/finduser}" th:object="${user}">
+            <input type="text" th:field="*{email}" class="form-control" id="email"
+                   placeholder="user@sample.com" required autofocus>
+      	 			<span class="text-danger align-middle" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+          <div class="p-2">
+             <button type="submit" class="btn btn-primary">Find User by Email</button>
+          </div>
+       </form>
+      </td>
+    </tr>    
   </tbody>
 </table>
- 
- 
-   <div class="col-md-3">
-     <form class="form-horizontal" role="form" method="POST" th:action="@{/finduser}" th:object="${user}">
-         <!-- FIRST NAME -->
-         <div class="row">
-             <div class="col-md-3 field-label-responsive">
-                 <label for="name">Find by First Name</label>
-             </div>
-             <div class="col-md-6">
-               <div class="form-group">
-                 <div class="input-group-addon" style="width: 2.6rem"></div>
-                   <input type="text" th:field="*{first_name}" class="form-control" id="first_name"
-                        placeholder="First Name" required autofocus>
-                 </div>
-             </div>
-         </div>
-         <div class="row">
-             <div class="col-md-3"></div>
-             <div class="col-md-6">
-                <button type="submit" class="btn btn-secondary">Find User by First Name</button>
-             </div>
-         </div>
-     </form>
-   </div>
 
    <div class="col-md-3">  
      <form class="form-horizontal" role="form" method="POST" th:action="@{/finduser}" th:object="${user}">    
