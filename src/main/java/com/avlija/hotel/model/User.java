@@ -32,7 +32,7 @@ public class User {
  private String password;
  
  @Column(name = "first_name")
- private String first_name; 
+ private String firstName; 
  
  @Column(name = "last_name")
  private String last_name;
@@ -66,11 +66,11 @@ public class User {
 	 
  }
  
- public User(String email, String password, String first_name, String last_name, String gender, String id_card_num,
+ public User(String email, String password, String firstName, String last_name, String gender, String id_card_num,
 		int age, int active, Set<Role> roles) {
 	this.email = email;
 	this.password = password;
-	this.first_name = first_name;
+	this.firstName = firstName;
 	this.last_name = last_name;
 	this.gender = gender;
 	this.id_card_num = id_card_num;
@@ -124,15 +124,15 @@ public void setId(long id) {
 /**
  * @return the first_name
  */
-public String getFirst_name() {
-	return first_name;
+public String getFirstName() {
+	return firstName;
 }
 
 /**
- * @param first_name the first_name to set
+ * @param firstName the firstName to set
  */
-public void setFirst_name(String first_name) {
-	this.first_name = first_name;
+public void setFirstName(String firstName) {
+	this.firstName = firstName;
 }
 
 /**

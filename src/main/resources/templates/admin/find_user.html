@@ -26,9 +26,10 @@
     <tr>         
       <th scope="row">Find by First Name</th>
       <td>
-     	<form class="form-horizontal" role="form" method="POST" th:action="@{/finduser}" th:object="${user}">
-      	 <input type="text" th:field="*{first_name}" class="form-control" id="first_name"
+     	<form class="form-horizontal" role="form" method="POST" th:action="@{/finduserFirstName}" th:object="${user}">
+      	 <input type="text" th:field="*{firstName}" class="form-control" id="firstName"
                         placeholder="First Name" required autofocus>
+      	 			<span class="text-danger align-middle" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
           <div class="p-2">
              <button type="submit" class="btn btn-secondary">Find User by First Name</button>
           </div>
@@ -49,39 +50,26 @@
           </div>
        </form>
       </td>
+      <td></td>
     </tr>    
+      <!-- ID CARD NUMBER  -->     
+    <tr>         
+      <th scope="row">Find by ID Number</th>
+      <td>
+     	<form class="form-horizontal" role="form" method="POST" th:action="@{/finduserById}" th:object="${user}">
+            <input type="text" th:field="*{id}" class="form-control" id="id"
+                   placeholder="000" required autofocus>
+      	 			<span class="text-danger align-middle" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
+          <div class="p-2">
+             <button type="submit" class="btn btn-info">Find User by ID Number</button>
+          </div>
+       </form>
+      </td>
+      <td></td>
+    </tr> 
   </tbody>
 </table>
 
-   <div class="col-md-3">  
-     <form class="form-horizontal" role="form" method="POST" th:action="@{/finduser}" th:object="${user}">    
-         <!-- E-MAIL  -->
-         <div class="row">
-             <div class="col-md-3 field-label-responsive">
-                 <label for="email">Find by Email</label>
-             </div>
-             <div class="col-md-6">
-                 <div class="form-group">
-                         <div class="input-group-addon" style="width: 2.6rem"></div>
-                         <input type="text" th:field="*{email}" class="form-control" id="email"
-                                placeholder="user@sample.com" required autofocus>
-                 </div>
-             </div>
-             <div class="col-md-3">
-                 <div class="form-control-feedback">
-                         <span class="text-danger align-middle" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
-                         </span>
-                 </div>
-             </div>
-         </div>
-         <div class="row">
-             <div class="col-md-3"></div>
-             <div class="col-md-6">
-                <button type="submit" class="btn btn-primary">Find User by Email</button>
-             </div>
-         </div>
-     </form>
-   </div>
  </div>
  
   <div th:include="fragments/footer :: footer"/></div>

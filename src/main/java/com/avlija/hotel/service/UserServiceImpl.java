@@ -62,4 +62,9 @@ public void updateUser(User user) {
 	  userRepository.save(user);
 }
 
+@Override
+public User findByUserFirstName(String firstName) {
+	return userRepository.findByFirstName(firstName);
+}
+
 }

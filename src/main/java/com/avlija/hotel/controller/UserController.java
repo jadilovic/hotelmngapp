@@ -97,7 +97,7 @@ public class UserController {
   User user = userService.findUserByEmail(auth.getName());
   long userId = user.getId();
 
-  model.addObject("userName", user.getFirst_name() + " " + user.getLast_name());
+  model.addObject("userName", user.getFirstName() + " " + user.getLast_name());
   model.addObject("userId", userId);
   model.setViewName("home/home");
   return model;
@@ -136,7 +136,7 @@ public class UserController {
   Authentication auth = SecurityContextHolder.getContext().getAuthentication();
   User user = userService.findUserByEmail(auth.getName());
   
-  model.addObject("userName", user.getFirst_name() + " " + user.getLast_name());
+  model.addObject("userName", user.getFirstName() + " " + user.getLast_name());
   model.setViewName("admin/adminPage");
   return model;
  }
@@ -160,7 +160,7 @@ public class UserController {
      Set<NoteReservation> listReservations = user.getNoteReservations();
      mav.addObject("listReservations", listReservations);
      if(listReservations.size() == 0) {
-    	 String message = "There are no reservations for user " + user.getFirst_name();
+    	 String message = "There are no reservations for user " + user.getFirstName();
     	 mav.addObject("message", message);
     	 return mav;
      }
@@ -226,13 +226,52 @@ public class UserController {
   if(bindingResult.hasErrors()) {
    model.setViewName("admin/find_user");
   } else {
-   model.addObject("msg", "Room has been registered successfully!");
    model.addObject("userProfile", userExists);
    model.setViewName("user/profile_page");
   }
   return model;
  }
 
+ @RequestMapping(value= {"/finduserFirstName"}, method=RequestMethod.POST)
+ public ModelAndView firstName(@Valid User user, BindingResult bindingResult) {
+  ModelAndView model = new ModelAndView();
+  User userExists = userService.findByUserFirstName(user.getFirstName());
+  if(userExists == null) {
+   bindingResult.rejectValue("firstName", "error.user", "Entered first name does not exist!");
+  }
+  if(bindingResult.hasErrors()) {
+   model.setViewName("admin/find_user");
+  } else {
+   model.addObject("userProfile", userExists);
+   model.setViewName("user/profile_page");
+  }
+  return model;
+ }
+ 
+ @RequestMapping(value= {"/finduserById"}, method=RequestMethod.POST)
+ public ModelAndView userId(@Valid User user, BindingResult bindingResult) {
+  ModelAndView model = new ModelAndView();
+  try {
+	  long id = user.getId();
+	  User userExists = userService.findUserById(id);
+	  if(userExists == null) {
+	   bindingResult.rejectValue("id", "error.user", "Entered user ID does not exist!");
+	  }
+	  if(bindingResult.hasErrors()) {
+	   model.setViewName("admin/find_user");
+	  } else {
+		     Set<Role> rolesList = userExists.getRoles();
+		     model.addObject("roles", rolesList);
+		     model.addObject("userProfile", userExists);
+		     model.setViewName("user/profile_page");
+	  }
+  } catch(Exception e) {
+	   bindingResult.rejectValue("id", "error.user", "You must enter a number!");
+	   model.setViewName("admin/find_user");
+  }
+  return model;
+ }
+ 
 @RequestMapping(value= {"/access_denied"}, method=RequestMethod.GET)
  public ModelAndView accessDenied() {
   ModelAndView model = new ModelAndView();
