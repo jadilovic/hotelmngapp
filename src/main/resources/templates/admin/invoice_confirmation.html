@@ -73,16 +73,19 @@
             </tr>
             <tr>
                 <td>
-                	<a class="btn btn-success" th:href="@{'/editbooking/' + ${reservation.id}}">Edit Reservation</a>
+                	<a class="btn btn-success" th:href="@{/allreservations}">List All Reservations</a>
                 </td>
                 <td>
-                    <a class="btn btn-warning" th:href="@{'/edit/' + ${reservation.id}}">Add Services</a>
+                    <a class="btn btn-warning" th:href="@{/allinvoices}">List All Invoices</a>
                 </td>
             </tr>
         </tbody>
     </table>
   </div>   
 </div>
+
+ <div th:replace="fragments/footer :: footer"/></div>
+
 </body>
 </html>
  
