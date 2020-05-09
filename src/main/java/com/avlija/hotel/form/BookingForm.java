@@ -16,6 +16,10 @@ public class BookingForm {
     
     private int serviceId;
     
+    private String serviceName;
+    
+    private double serviceCost;
+    
     private Set<AddService> services;
     
     private int roomId;
@@ -289,6 +293,22 @@ public class BookingForm {
 
 	public void setServiceId(int serviceId) {
 		this.serviceId = serviceId;
+	}
+
+	public String getServiceName() {
+		return serviceName;
+	}
+
+	public void setServiceName(String serviceName) {
+		this.serviceName = serviceName;
+	}
+
+	public double getServiceCost() {
+		return serviceCost;
+	}
+
+	public void setServiceCost(double serviceCost) {
+		this.serviceCost = serviceCost;
 	}
     
 }

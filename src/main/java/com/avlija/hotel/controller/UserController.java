@@ -1,5 +1,6 @@
 package com.avlija.hotel.controller;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Set;
 
@@ -10,16 +11,20 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.avlija.hotel.form.BookingForm;
+import com.avlija.hotel.model.AddService;
 import com.avlija.hotel.model.Logins;
 import com.avlija.hotel.model.NoteReservation;
 import com.avlija.hotel.model.Role;
 import com.avlija.hotel.model.Room;
 import com.avlija.hotel.model.User;
+import com.avlija.hotel.repository.AddServiceRepository;
 import com.avlija.hotel.repository.LoginsRepository;
 import com.avlija.hotel.repository.RoomRepository;
 import com.avlija.hotel.service.UserService;
@@ -35,6 +40,9 @@ public class UserController {
  
  @Autowired
  private LoginsRepository loginsRepository;
+ 
+ @Autowired
+ private AddServiceRepository serviceRepository;
  
  
  @RequestMapping(value= {"/", "/login"}, method=RequestMethod.GET)
@@ -167,7 +175,6 @@ public class UserController {
      return mav;
  }
  
- 
  @RequestMapping(value= {"/createroom"}, method=RequestMethod.GET)
  public ModelAndView createRoom() {
   ModelAndView model = new ModelAndView();
@@ -181,10 +188,12 @@ public class UserController {
  @RequestMapping(value= {"/createroom"}, method=RequestMethod.POST)
  public ModelAndView createUser(@Valid Room room, BindingResult bindingResult) {
   ModelAndView model = new ModelAndView();
+
   Room roomExists = roomRepository.findByNum(room.getNum());
-  if(roomExists != null) {
-   bindingResult.rejectValue("num", "error.room", "This room number already exists!");
-  }
+	if(roomExists != null) {
+	    bindingResult.rejectValue("num", "error.room", "This room number already exists!");
+	   }
+  
   if(bindingResult.hasErrors()) {
    model.setViewName("admin/create_room");
   } else {
@@ -195,6 +204,40 @@ public class UserController {
   }
   return model;
  }
+ 
+ @RequestMapping(value= {"/createservice"}, method=RequestMethod.GET)
+ public ModelAndView createService1() {
+  ModelAndView model = new ModelAndView();
+  BookingForm bookingForm = new BookingForm();
+  model.addObject("bookingForm", bookingForm);
+  model.setViewName("admin/create_service");
+  
+  return model;
+ }
+ 
+ @RequestMapping(value= {"/createservice"}, method=RequestMethod.POST)
+ public ModelAndView createService2(@ModelAttribute("command") BookingForm bookingForm) throws ParseException {
+  ModelAndView model = new ModelAndView();
+  model.setViewName("admin/create_service");
+  try {
+	  int serviceId = bookingForm.getServiceId();
+	  String serviceName = bookingForm.getServiceName();
+	  double serviceCost = bookingForm.getServiceCost();  
+	  AddService service = serviceRepository.findById(serviceId).get();
+	  if(service != null) {
+		  model.addObject("message", "Service ID already exists");
+	  } else {
+		  service = new AddService(serviceId, serviceName, serviceCost);
+		   serviceRepository.save(service);
+		   model.addObject("message", "New service has been added successfully!");
+		   model.addObject("bookingForm", new BookingForm());
+	  }
+  } catch(Exception e) {
+	  		model.addObject("message", "Wrong input. Try Again.");
+		   model.addObject("bookingForm", new BookingForm());
+  			}
+  return model;
+		}
  
  @RequestMapping(value= {"/allrooms"}, method=RequestMethod.GET)
  public ModelAndView showAllRooms() {

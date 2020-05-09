@@ -10,15 +10,22 @@
 </head>
 <body>
 
+<div th:replace="fragments/header :: header"/></div>
+
+ <div class="p-2" align="center">
+   <h5>Listing of All Services in the Hotel</h5>
+ </div>
+
   <div class="container table-responsive" align="center">
     <p><b th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></b></p>
     
-    <table border="1" cellpadding="2" class="table-striped">
+    <table class="table table-bg table-striped">
         <thead>
             <tr>
                 <th scope="col">Service ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Cost</th>
+                <th scope="col">More Info</th>
             </tr>
         </thead>
         <tbody>
@@ -27,17 +34,19 @@
                 <td th:text="${service.name}">Name</td>
                 <td th:text="${service.cost}">Cost</td>
                 <td>
-                	<a class="btn btn-success" th:href="@{'/buysell/' + ${service.id}}">Add Service</a>
-                </td>
-                <td>
-                    <a class="btn btn-warning" th:href="@{'/edit/' + ${service.id}}">Edit Service</a>
-                </td>
-                <td>
-                    <a class="btn btn-danger" th:href="@{'/delete/' + ${service.id}}">Delete Service</a>
+                	<a class="btn btn-success" href="#">More Info</a>
                 </td>
             </tr>
         </tbody>
     </table>
+      
+   <div>
+       <a class="p-2 btn btn-warning" th:href="@{/allreservations}">List All Reservations</a>
+   </div>
+   
   </div>  
+
+ <div th:replace="fragments/footer :: footer"/></div>
+  
 </body>
 </html>

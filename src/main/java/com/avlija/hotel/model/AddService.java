@@ -8,8 +8,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="add_services")
 public class AddService {
- 
- @Id
+
+@Id
  @Column(name="service_id")
  private int id;
  

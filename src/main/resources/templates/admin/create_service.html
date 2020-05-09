@@ -13,54 +13,61 @@
 <div th:include="fragments/header :: header"/></div>
  
    <div class="p-2" align="center">
-      <h5>Create a New Room</h5>
+      <h5>Create a New Service</h5>
    </div>
 
  <div class="container">
-     <form class="form-horizontal" role="form" method="POST" th:action="@{/createroom}" th:object="${room}">
+     <form class="form-horizontal" role="form" method="POST" th:action="@{/createservice}" th:object="${bookingForm}">
       <div class="row">
          <div class="col-md-3"></div>
              <div class="col-md-6">
-              	<div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}"></div>
+              	<div class="alert alert-success" role="alert" th:if="${message}" th:utext="${message}"></div>
              </div>
       </div>
          
-         <!-- ROOM NUMBER -->
+         <!-- SERVICE ID -->
          <div class="row">
              <div class="col-md-3 field-label-responsive">
-                 <label for="num">Room Number:</label>
+                 <label for="serviceId">Service ID:</label>
              </div>
              <div class="col-md-6">
                  <div class="form-group">
                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                          <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
-                         <input type="text" th:field="*{num}" class="form-control" id="num"
-                                placeholder="Room Number" required autofocus>
+                         <input type="text" th:field="*{serviceId}" class="form-control" id="id"
+                                placeholder="Service ID Number" required autofocus>
                      </div>
                  </div>
              </div>
-          <div class="col-md-3">
-            <div class="form-control-feedback">
-              <span class="text-danger align-middle" th:if="${#fields.hasErrors('num')}" th:errors="*{num}">
-               </span>
-            </div>
-          </div>
          </div>
          
-         <!-- ROOM TYPE -->
+         <!-- SERVICE NAME -->
          <div class="row">
              <div class="col-md-3 field-label-responsive">
-                 <label for="roomType">Room Type</label>
+                 <label for="serviceName">Service Name</label>
              </div>
              <div class="col-md-6">
                  <div class="form-group has-danger">
                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                          <div class="input-group-addon" style="width: 2.6rem"><i class="fas fa-universal-access"></i></div>
-                    		<select th:field="*{roomType}">
-    							<option th:value="'1'" th:text="Single"></option>
-    							<option th:value="'2'" th:text="Double"></option>
-    							<option th:value="'3'" th:text="Apartment"></option>
-							</select>
+                        <input type="text" th:field="*{serviceName}" class="form-control" id="name"
+                                placeholder="Service Name" required autofocus>
+                     </div>
+                 </div>
+             </div>
+         </div>
+         
+         <!-- SERVICE COST -->
+         <div class="row">
+             <div class="col-md-3 field-label-responsive">
+                 <label for="serviceCost">Service Cost</label>
+             </div>
+             <div class="col-md-6">
+                 <div class="form-group has-danger">
+                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                         <div class="input-group-addon" style="width: 2.6rem"><i class="fas fa-universal-access"></i></div>
+                        <input type="text" th:field="*{serviceCost}" class="form-control" id="cost"
+                                placeholder="Service Cost" required autofocus>
                      </div>
                  </div>
              </div>
@@ -69,7 +76,7 @@
          <div class="row">
              <div class="col-md-3"></div>
              <div class="col-md-6">
-                <button type="submit" class="btn btn-success"><i class="fa fa-user-plus"></i> Create Room</button>
+                <button type="submit" class="btn btn-success"><i class="fa fa-user-plus"></i> Create Service</button>
              </div>
          </div>
      </form>
