@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:th="http://www.thymeleaf.org">
+<head>
+ <title>All Reservations</title>
+ <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+ <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/></div>
+
+ <div class="p-2" align="center">
+   <h5>Listing of All Reservations</h5>
+ </div>
+
+  <div class="container table-responsive" align="center">
+    <p><b th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></b></p>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Reservation ID</th>
+                <th scope="col">Date of reservation</th>
+                <th scope="col">Reserved</th>
+                <th scope="col">Check IN Date</th>
+                <th scope="col">Check OUT Date</th>
+               <!-- <th scope="col">Number of days</th>
+                <th scope="col">Total Cost</th>  -->
+                <th scope="col">User ID</th>
+                <th scope="col">User Name</th>
+                <th scope="col">Room Number</th>
+                <th scope="col">Room Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr scope="row" th:each="reservation : ${listReservations}">
+                <td th:text="${reservation.id}">Reservation ID</td>
+                <td th:text="${reservation.created}">Date of Reservation</td>
+                <td th:text="${reservation.booked}">Booked</td>
+                <td th:text="${reservation.checkIn}">Check IN</td>
+                <td th:text="${reservation.checkOut}">Check OUT</td>
+               <!--  <td th:text="*{resDays}">Number of Days</td>
+                <td th:text="*{totalCost}">Total Cost</td> -->
+                <td th:text="${reservation.user.getId()}">User ID</td>
+                <td th:text="${reservation.user.getFirstName()}">User Name</td>
+                <td th:text="${reservation.room.getNum()}">Room Number</td>
+                <td th:text="${reservation.room.getRoomType().getType()}">Room Type</td>
+                <td>
+                	<a class="btn btn-success" th:href="@{'/addservice/' + ${reservation.id}}">Add Service</a>
+                </td>
+                <td>
+                    <a class="btn btn-warning" th:href="@{'/editreserve1/' + ${reservation.id}}">Edit Reserv</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>  
+  
+ <div th:replace="fragments/footer :: footer"/></div>
+ 
+</body>
+</html>

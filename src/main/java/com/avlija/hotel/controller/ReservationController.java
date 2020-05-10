@@ -300,6 +300,23 @@ public class ReservationController {
   return model;
  }
  
+ 
+ @RequestMapping(value = "/statusreservation/{id}")
+ public ModelAndView statusres(@PathVariable(name = "id") Long id) {
+     ModelAndView mav = new ModelAndView("user/list_user_reservations");
+     String message = null;
+     User user = userServiceImpl.findUserById(id);
+     Set<NoteReservation> listReservations = user.getNoteReservations();
+     mav.addObject("listReservations", listReservations);
+     if(listReservations.size() == 0) {
+    	 message = "There are no reservations for user " + user.getFirstName();
+     } else {
+    	 message = "For user " + user.getFirstName();
+     }
+	 mav.addObject("message", message);
+     return mav;
+ }
+ 
  public List<Room> searchByDate(String inputFromDate, String inputToDate) {
 	 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	 LocalDate In = LocalDate.parse(inputFromDate, formatter);

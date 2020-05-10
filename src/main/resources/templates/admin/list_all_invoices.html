@@ -20,7 +20,7 @@
   <div class="container table-responsive" align="center">
     <p><b th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></b></p>
     
-    <table border="1" cellpadding="2" class="table-striped">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">User ID</th>
@@ -33,8 +33,7 @@
             <tr scope="row" th:each="invoice : ${listInvoices}">
                 <td th:text="${invoice.id}">Invoice ID</td>
                 <td th:text="${invoice.created}">Date Created</td>
-                <td th:text="${invoice.totalHotelCost}">Total Cost</td>
-                <td>Reservation ID</td>            
+                <td th:text="${invoice.totalHotelCost}">Total Cost</td>          
                 <td th:object="${invoice}">
                 	<a class="btn btn-primary" th:href="@{'/checkout/' + *{noteReservation.getId()}}">More Details</a>
                 </td>

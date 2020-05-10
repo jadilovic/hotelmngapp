@@ -149,6 +149,17 @@ public class UserController {
   return model;
  }
  
+ @RequestMapping(value= {"/guest"}, method=RequestMethod.GET)
+ public ModelAndView guest() {
+  ModelAndView model = new ModelAndView("user/guestPage");
+  Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+  User user = userService.findUserByEmail(auth.getName());
+  
+  model.addObject("userName", user.getFirstName() + " " + user.getLast_name());
+  model.addObject("user", user);
+  return model;
+ }
+ 
  @RequestMapping(value= {"/allusers"}, method=RequestMethod.GET)
  public ModelAndView showAllUsers() {
   ModelAndView model = new ModelAndView();

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
  xmlns:th="http://www.thymeleaf.org">
 <head>
- <title>Admin Page</title>
+ <title>Guest Page</title>
  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -15,41 +15,25 @@
  <div class="container">
  
  <div class="p-2" align="center">
-  <h5>Hi <span th:utext="${userName}"></span>, this is the Admin Page.</h5>
+  <h5>Hi <span th:utext="${userName}"></span>, this is the User Guest Page.</h5>
   </div>
   
  <table class="table table-borderless">
  <tbody>
-   <tr>
+   <tr th:object="${user}">
   	<td scope="col">
-  	 <a th:href="@{/signup}" class="btn-primary btn-lg btn-block" role="button" aria-pressed="true">Sign Up</a>
+  	 <a th:href="@{'/statusreservation/' + *{id}}" class="btn-primary btn-lg btn-block" role="button" aria-pressed="true">Your Reservation Status</a>
   	</td>
   	<td scope="col">
-  	 <a th:href="@{/allreservations}" class="btn-warning btn-lg btn-block" role="button" aria-pressed="true">List All Reservations</a>
-  	</td>
-  	</tr>
-  	<tr>
-  	<td scope="col">
-  <a th:href="@{/allusers}" class="btn-success btn-lg btn-block" role="button" aria-pressed="true">List All Users</a>
-  	</td>
-  	<td scope="col">
-  <a th:href="@{/finduser}" class="btn-success btn-lg btn-block" role="button" aria-pressed="true">Find Users</a>
+  	 <a th:href="@{/allrooms}" class="btn-warning btn-lg btn-block" role="button" aria-pressed="true">List of Rooms</a>
   	</td>
   	</tr>
   	<tr>
   	<td scope="col">
-  <a th:href="@{/createroom}" class="btn-info btn-lg btn-block" role="button" aria-pressed="true">Create Room</a>
+  <a th:href="@{/alladdservices}" class="btn-success btn-lg btn-block" role="button" aria-pressed="true">All Additional Services</a>
   	</td>
   	<td scope="col">
-  <a th:href="@{/loggedUsers}" class="btn-secondary btn-lg btn-block" role="button" aria-pressed="true">Logged Users</a>
-  	</td>
-  	</tr>
-  	  	<tr>
-  	<td scope="col">
-  <a th:href="@{/createservice}" class="btn-info btn-lg btn-block" role="button" aria-pressed="true">Create Service</a>
-  	</td>
-  	<td scope="col">
-  <a th:href="@{/allinvoices}" class="btn-primary btn-lg btn-block" role="button" aria-pressed="true">List of Invoices</a>
+  <a th:href="@{/alluserinvoices}" class="btn-success btn-lg btn-block" role="button" aria-pressed="true">Your Invoices</a>
   	</td>
   	</tr>
  </tbody>
