@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:th="http://www.thymeleaf.org">
+<head>
+ <title>List of Invoices</title>
+ <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+ <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/></div>
+
+ <div class="p-2" align="center">
+   <h5>Listing of All Invoices</h5>
+ </div>
+
+
+  <div class="container table-responsive" align="center">
+    <p><b th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></b></p>
+    
+    <table border="1" cellpadding="2" class="table-striped">
+        <thead>
+            <tr>
+                <th scope="col">User ID</th>
+                <th scope="col">Date Invoice Created</th>
+                <th scope="col">Total Hotel Cost</th>
+                <th scope="col">Reservation ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr scope="row" th:each="invoice : ${listInvoices}">
+                <td th:text="${invoice.id}">Invoice ID</td>
+                <td th:text="${invoice.created}">Date Created</td>
+                <td th:text="${invoice.totalHotelCost}">Total Cost</td>
+                <td>Reservation ID</td>            
+                <td>
+                	<a class="btn btn-primary" th:href="@{'/checkout/' + ${}}">More Details</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>  
+  
+ <div th:replace="fragments/footer :: footer"/></div>
+ 
+</body>
+</html>

@@ -27,6 +27,7 @@ import com.avlija.hotel.model.NoteReservation;
 import com.avlija.hotel.model.Room;
 import com.avlija.hotel.model.User;
 import com.avlija.hotel.repository.AddServiceRepository;
+import com.avlija.hotel.repository.InvoiceRepository;
 import com.avlija.hotel.repository.NoteReservationRepository;
 import com.avlija.hotel.repository.RoomRepository;
 import com.avlija.hotel.service.UserServiceImpl;
@@ -45,6 +46,9 @@ public class ReservationController {
 
  	@Autowired
  	private UserServiceImpl userServiceImpl;
+ 	
+ 	@Autowired
+ 	private InvoiceRepository invoiceRepository;
  	
 
  @RequestMapping(value= {"/allreservations"}, method=RequestMethod.GET)
@@ -284,6 +288,16 @@ public class ReservationController {
      noteReservationRepository.save(reservation);
      mav.addObject("reservation", reservation);
      return mav;
+ }
+ 
+ @RequestMapping(value= {"/allinvoices"}, method=RequestMethod.GET)
+ public ModelAndView showAllInvoices() {
+  ModelAndView model = new ModelAndView();
+  List<Invoice> listInvoices = (List<Invoice>) invoiceRepository.findAll();
+  model.addObject("listInvoices", listInvoices);
+  model.setViewName("admin/list_all_invoices");
+  
+  return model;
  }
  
  public List<Room> searchByDate(String inputFromDate, String inputToDate) {

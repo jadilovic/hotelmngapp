@@ -56,14 +56,13 @@
     <tr>         
       <th scope="row">Find by ID Number</th>
       <td>
-     	<form class="form-horizontal" role="form" method="POST" th:action="@{/finduserById}" th:object="${user}">
-            <input type="text" th:field="*{id}" class="form-control" id="id"
-                   placeholder="000" required autofocus>
-      	 			<span class="text-danger align-middle" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
-          <div class="p-2">
-             <button type="submit" class="btn btn-info">Find User by ID Number</button>
-          </div>
-       </form>
+		<form class="form-horizontal" role="form" method="POST" th:action="@{/finduserById}" th:object="${user}">
+      		<input type="number" th:field="*{id}" class="form-control" id="validationCustom05" placeholder="ID Number" required autofocus>
+      		<span class="text-danger align-middle" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
+  		       <div class="p-2">
+  				<button class="btn btn-primary" type="submit">Find the User</button>
+  			   </div>
+		</form>
       </td>
       <td></td>
     </tr> 

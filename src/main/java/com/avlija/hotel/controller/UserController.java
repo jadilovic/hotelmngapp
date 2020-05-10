@@ -217,26 +217,29 @@ public class UserController {
  
  @RequestMapping(value= {"/createservice"}, method=RequestMethod.POST)
  public ModelAndView createService2(@ModelAttribute("command") BookingForm bookingForm) throws ParseException {
-  ModelAndView model = new ModelAndView();
-  model.setViewName("admin/create_service");
+  ModelAndView model = new ModelAndView("admin/create_service");
+  AddService service = null;
   try {
-	  int serviceId = bookingForm.getServiceId();
-	  String serviceName = bookingForm.getServiceName();
-	  double serviceCost = bookingForm.getServiceCost();  
-	  AddService service = serviceRepository.findById(serviceId).get();
-	  if(service != null) {
-		  model.addObject("message", "Service ID already exists");
-	  } else {
-		  service = new AddService(serviceId, serviceName, serviceCost);
-		   serviceRepository.save(service);
-		   model.addObject("message", "New service has been added successfully!");
-		   model.addObject("bookingForm", new BookingForm());
-	  }
-  } catch(Exception e) {
-	  		model.addObject("message", "Wrong input. Try Again.");
-		   model.addObject("bookingForm", new BookingForm());
+	  service = serviceRepository.findById(bookingForm.getServiceId()).get();
+	  System.out.println("TEST 4 SERVICE EXISTS");
+	  	if(service != null) {
+		  	model.addObject("message", "Service ID already exists");
+	  		} 
+  		} catch(Exception e) {
+  			int serviceId = bookingForm.getServiceId();
+  			System.out.println("TEST 1 SERVICE ID");
+  			String serviceName = bookingForm.getServiceName();
+  			System.out.println("TEST 2 SERVICE NAME");
+  			double serviceCost = bookingForm.getServiceCost();  
+  			System.out.println("TEST 3 SERVICE COST");
+  			service = new AddService(serviceId, serviceName, serviceCost);
+  			serviceRepository.save(service);
+  			model.addObject("message", "New service has been added successfully!");
+  			model.addObject("bookingForm", new BookingForm());
+		   return model;
   			}
-  return model;
+  		model.addObject("bookingForm", new BookingForm());
+  		return model;
 		}
  
  @RequestMapping(value= {"/allrooms"}, method=RequestMethod.GET)
@@ -295,21 +298,13 @@ public class UserController {
  public ModelAndView userId(@Valid User user, BindingResult bindingResult) {
   ModelAndView model = new ModelAndView();
   try {
-	  long id = user.getId();
-	  User userExists = userService.findUserById(id);
-	  if(userExists == null) {
-	   bindingResult.rejectValue("id", "error.user", "Entered user ID does not exist!");
-	  }
-	  if(bindingResult.hasErrors()) {
-	   model.setViewName("admin/find_user");
-	  } else {
-		     Set<Role> rolesList = userExists.getRoles();
-		     model.addObject("roles", rolesList);
-		     model.addObject("userProfile", userExists);
-		     model.setViewName("user/profile_page");
-	  }
+	  User userExists = userService.findUserById(user.getId());
+	  Set<Role> rolesList = userExists.getRoles();
+	  model.addObject("roles", rolesList);
+	  model.addObject("userProfile", userExists);
+	  model.setViewName("user/profile_page");
   } catch(Exception e) {
-	   bindingResult.rejectValue("id", "error.user", "You must enter a number!");
+	   bindingResult.rejectValue("id", "error.user", "Entered user ID does not exist!");
 	   model.setViewName("admin/find_user");
   }
   return model;
