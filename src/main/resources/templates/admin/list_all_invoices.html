@@ -35,8 +35,8 @@
                 <td th:text="${invoice.created}">Date Created</td>
                 <td th:text="${invoice.totalHotelCost}">Total Cost</td>
                 <td>Reservation ID</td>            
-                <td>
-                	<a class="btn btn-primary" th:href="@{'/checkout/' + ${}}">More Details</a>
+                <td th:object="${invoice}">
+                	<a class="btn btn-primary" th:href="@{'/checkout/' + *{noteReservation.getId()}}">More Details</a>
                 </td>
             </tr>
         </tbody>
