@@ -28,12 +28,12 @@
   	 <a th:href="@{/allrooms}" class="btn-warning btn-lg btn-block" role="button" aria-pressed="true">List of Rooms</a>
   	</td>
   	</tr>
-  	<tr>
+  	<tr th:object="${user}">
   	<td scope="col">
   <a th:href="@{/alladdservices}" class="btn-success btn-lg btn-block" role="button" aria-pressed="true">All Additional Services</a>
   	</td>
   	<td scope="col">
-  <a th:href="@{/alluserinvoices}" class="btn-success btn-lg btn-block" role="button" aria-pressed="true">Your Invoices</a>
+  <a th:href="@{'/active/' + *{id}}" class="btn-danger btn-lg btn-block" role="button" aria-pressed="true">Change Active</a>
   	</td>
   	</tr>
  </tbody>

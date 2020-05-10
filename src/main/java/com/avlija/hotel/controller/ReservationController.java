@@ -12,6 +12,8 @@ import java.util.Set;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +32,7 @@ import com.avlija.hotel.repository.AddServiceRepository;
 import com.avlija.hotel.repository.InvoiceRepository;
 import com.avlija.hotel.repository.NoteReservationRepository;
 import com.avlija.hotel.repository.RoomRepository;
+import com.avlija.hotel.service.UserService;
 import com.avlija.hotel.service.UserServiceImpl;
 
 @Controller
@@ -50,17 +53,21 @@ public class ReservationController {
  	@Autowired
  	private InvoiceRepository invoiceRepository;
  	
+ 	 @Autowired
+ 	 private UserService userService;
 
  @RequestMapping(value= {"/allreservations"}, method=RequestMethod.GET)
  public ModelAndView showAllReservations() {
   ModelAndView model = new ModelAndView();
+  Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+  User user = userService.findUserByEmail(auth.getName());
   List<NoteReservation> listReservations = (List<NoteReservation>) noteReservationRepository.findAll();
   
   for(NoteReservation res: listReservations) {
 	  System.out.println(res.toString());
   }
   model.addObject("listReservations", listReservations);
-  model.setViewName("home/list_all_reservations");
+  model.setViewName("admin/list_all_reservations");
   
   return model;
  }
@@ -300,6 +307,24 @@ public class ReservationController {
   return model;
  }
  
+ @RequestMapping(value= {"/invoice/{id}"}, method=RequestMethod.GET)
+ public ModelAndView showInvoice(@PathVariable(name = "id") Long id) {
+  ModelAndView model = new ModelAndView("admin/invoice_confirmation");
+  String message = null;
+  NoteReservation reservation = noteReservationRepository.findById(id).get();
+  if(reservation.getInvoice() == null) {
+	  message = "No invoice was issued for this reservation yet";
+	  model.setViewName("user/list_user_reservations");
+	     User user = userServiceImpl.findUserById(reservation.getUser().getId());
+	     Set<NoteReservation> listReservations = user.getNoteReservations();
+	     model.addObject("listReservations", listReservations);
+  } else {
+	  message = "Invoice for reservation id " + reservation.getId();
+  }
+  model.addObject("message", message);
+  model.addObject("reservation", reservation);
+  return model;
+ }
  
  @RequestMapping(value = "/statusreservation/{id}")
  public ModelAndView statusres(@PathVariable(name = "id") Long id) {
