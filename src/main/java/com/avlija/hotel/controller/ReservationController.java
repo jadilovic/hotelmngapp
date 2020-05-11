@@ -12,8 +12,6 @@ import java.util.Set;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +30,6 @@ import com.avlija.hotel.repository.AddServiceRepository;
 import com.avlija.hotel.repository.InvoiceRepository;
 import com.avlija.hotel.repository.NoteReservationRepository;
 import com.avlija.hotel.repository.RoomRepository;
-import com.avlija.hotel.service.UserService;
 import com.avlija.hotel.service.UserServiceImpl;
 
 @Controller
@@ -53,14 +50,13 @@ public class ReservationController {
  	@Autowired
  	private InvoiceRepository invoiceRepository;
  	
- 	 @Autowired
- 	 private UserService userService;
 
- @RequestMapping(value= {"/allreservations"}, method=RequestMethod.GET)
+
+ @RequestMapping(value= {"/admin/allreservations"}, method=RequestMethod.GET)
  public ModelAndView showAllReservations() {
   ModelAndView model = new ModelAndView();
-  Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-  User user = userService.findUserByEmail(auth.getName());
+  //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+  //User user = userService.findUserByEmail(auth.getName());
   List<NoteReservation> listReservations = (List<NoteReservation>) noteReservationRepository.findAll();
   
   for(NoteReservation res: listReservations) {
