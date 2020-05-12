@@ -174,7 +174,7 @@ public class UserController {
  
  @RequestMapping(value = "/resinfo/{id}")
  public ModelAndView editRes1(@PathVariable(name = "id") Long id) {
-     ModelAndView mav = new ModelAndView("home/list_all_reservations");
+     ModelAndView mav = new ModelAndView("admin/list_all_reservations");
      User user = userService.findUserById(id);
      Set<NoteReservation> listReservations = user.getNoteReservations();
      mav.addObject("listReservations", listReservations);
